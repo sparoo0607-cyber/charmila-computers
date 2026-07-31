@@ -4,6 +4,9 @@ import Image from 'next/image';
 
 import { ScrollytellingHero } from '@/components/home/ScrollytellingHero';
 import { CategoryPedestals } from '@/components/home/CategoryPedestals';
+import { BrandsMarquee } from '@/components/home/BrandsMarquee';
+import { FlashDealsBanner } from '@/components/home/FlashDealsBanner';
+import { BuildPcCTA } from '@/components/home/BuildPcCTA';
 import { ProductCard } from '@/components/ui/ProductCard';
 import { PromoBanner } from '@/components/home/PromoBanner';
 
@@ -60,6 +63,9 @@ export default function Home() {
 
       {/* ── 3. CATEGORY PEDESTALS ────────────────────────── */}
       <CategoryPedestals />
+
+      {/* ── 3.1 BRANDS MARQUEE ───────────────────────────── */}
+      <BrandsMarquee />
 
       {/* ── 3.5. LONG PICTURE BANNER ─────────────────────── */}
       <section className="py-8 relative z-10">
@@ -192,48 +198,7 @@ export default function Home() {
       />
 
       {/* ── 7. FLASH DEAL BANNER ─────────────────────────── */}
-      <section className="py-6 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="relative rounded-2xl overflow-hidden border border-[#F59E0B]/30 bg-[#0F1624]">
-            {/* Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1A1200] via-[#0F1624] to-[#1A1200]" />
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#F59E0B] to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-[#F59E0B]/40 to-transparent" />
-            {/* Glow blob */}
-            <div className="absolute left-0 top-0 bottom-0 w-64 bg-[#F59E0B] opacity-5 blur-3xl" />
-
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 px-6 md:px-10 py-7">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-[#F59E0B]/15 border border-[#F59E0B]/30 flex-shrink-0">
-                  <Flame className="h-6 w-6 text-[#F59E0B]" />
-                </div>
-                <div>
-                  <span className="block text-[9px] font-black uppercase tracking-[0.4em] text-[#F59E0B] mb-0.5">Limited Time Offer</span>
-                  <h3 className="text-lg md:text-xl font-black text-white uppercase leading-tight">Flash Deals — Up to 25% Off</h3>
-                  <p className="text-xs text-[#64748B] mt-0.5">On select RAM, SSDs, and cooling components. While stocks last!</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 flex-shrink-0">
-                <Link
-                  href="/products"
-                  className="inline-flex items-center gap-2 bg-[#F59E0B] hover:bg-[#D97706] text-black text-sm font-black px-7 py-3 rounded-xl transition-all uppercase tracking-wider hover:shadow-[0_0_20px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 group"
-                >
-                  Shop Deals
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  href="https://wa.me/919010177427?text=Hi!%20I%20want%20to%20know%20about%20the%20current%20flash%20deals."
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1EB35B] text-white text-sm font-bold px-5 py-3 rounded-xl transition-all hover:shadow-[0_0_15px_rgba(37,211,102,0.4)] hover:scale-105 active:scale-95"
-                >
-                  <MessageCircle className="h-4 w-4" /> WhatsApp
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FlashDealsBanner />
 
       {/* ── 8. GAMING ZONE ────────────────────────────────── */}
       <section className="py-16 relative overflow-hidden">
@@ -252,58 +217,7 @@ export default function Home() {
       </section>
 
       {/* ── 9. BUILD-PC CTA BANNER ───────────────────────── */}
-      <section className="py-6 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="relative rounded-2xl overflow-hidden min-h-[220px] flex items-center border border-[#1E2D45]">
-            {/* Dark mesh background */}
-            <div className="absolute inset-0 bg-[#080C14] grid-bg" />
-            {/* Blue radial glow left */}
-            <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-[#2563EB]/20 to-transparent" />
-            {/* Cyan radial glow right */}
-            <div className="absolute right-0 top-0 bottom-0 w-96 bg-[#00D4FF] opacity-5 blur-3xl" />
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#2563EB] via-[#00D4FF] to-[#A78BFA]" />
-
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 px-6 md:px-12 py-10 w-full">
-              <div className="flex items-start gap-5">
-                <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#00D4FF] shadow-[0_0_25px_rgba(37,99,235,0.5)] flex-shrink-0">
-                  <Cpu className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <span className="block text-[9px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-2">Expert PC Building</span>
-                  <h3 className="text-2xl md:text-3xl font-black text-white uppercase leading-tight mb-2">Dream PC. Built For You.</h3>
-                  <p className="text-sm text-[#475569] max-w-md leading-relaxed">
-                    Tell us your budget and use-case. Our expert team assembles a custom powerhouse — gaming, editing, or workstation.
-                  </p>
-                  <div className="flex flex-wrap gap-3 mt-4">
-                    {['Gaming PCs', 'Video Editing', 'Workstations', 'Budget Builds'].map(tag => (
-                      <span key={tag} className="flex items-center gap-1 text-[10px] font-bold text-[#64748B] border border-[#1E2D45] rounded-full px-3 py-1">
-                        <Tag className="h-2.5 w-2.5" /> {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-3 flex-shrink-0">
-                <Link
-                  href="/build-pc"
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#2563EB] to-[#00D4FF] text-white text-sm font-black px-10 py-4 rounded-xl uppercase tracking-wider shadow-[0_0_25px_rgba(37,99,235,0.45)] hover:shadow-[0_0_40px_rgba(37,99,235,0.7)] hover:scale-105 active:scale-95 transition-all group"
-                >
-                  <Cpu className="h-4 w-4" /> Start Building
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  href="https://wa.me/919010177427?text=Hi!%20I%20want%20to%20build%20a%20custom%20PC.%20Can%20you%20help%3F"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#25D366] border border-[#25D366]/30 hover:border-[#25D366]/60 text-sm font-bold px-10 py-4 rounded-xl uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(37,211,102,0.2)]"
-                >
-                  <MessageCircle className="h-4 w-4" /> WhatsApp Us
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <BuildPcCTA />
 
       {/* ── 10. SERVICE STRIPS ───────────────────────────── */}
       <section className="py-6 relative overflow-hidden">
