@@ -146,59 +146,24 @@ export const ScrollytellingHero = () => {
         )}
 
         {/* Text Overlays Layer */}
-        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center items-center text-white px-6 text-center">
-
-          {/* Scene 1 — Power */}
-          <motion.div style={{ opacity: opacity1, y: y1 }} className="absolute flex flex-col items-center gap-4 w-full">
-            <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#00D4FF] drop-shadow-[0_0_12px_rgba(0,212,255,0.8)]">Charmila Computers · Tirupati</span>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[1.1] md:leading-none tracking-tighter text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.8)]">
-              Build the<br/>
-              <span style={{ background: 'linear-gradient(135deg, #60A5FA 0%, #00D4FF 50%, #A78BFA 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Ultimate</span><br/>
-              Machine.
-            </h1>
-          </motion.div>
-
-          {/* Scene 2 — GPU */}
-          <motion.div style={{ opacity: opacity2, y: y2 }} className="absolute flex flex-col items-center gap-4 w-full">
-            <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#F59E0B] drop-shadow-[0_0_12px_rgba(245,158,11,0.8)]">Graphics · RTX 4090</span>
-            <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[1.1] md:leading-none tracking-tighter text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.8)]">
-              Raw Power.<br/>
-              <span style={{ background: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Zero Limits.</span>
-            </h2>
-          </motion.div>
-
-          {/* Scene 3 — Performance */}
-          <motion.div style={{ opacity: opacity3, y: y3 }} className="absolute flex flex-col items-center gap-4 w-full">
-            <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#22C55E] drop-shadow-[0_0_12px_rgba(34,197,94,0.8)]">Expert Assembly · 15+ Years</span>
-            <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[1.1] md:leading-none tracking-tighter text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.8)]">
-              Precision<br/>
-              <span style={{ background: 'linear-gradient(135deg, #22C55E 0%, #00D4FF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Engineered.</span>
-            </h2>
-          </motion.div>
-
-          {/* Scene 4 — CTA */}
-          <motion.div style={{ opacity: opacity4, y: y4 }} className="absolute flex flex-col items-center gap-6 w-full">
-            <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#00D4FF] drop-shadow-[0_0_12px_rgba(0,212,255,0.8)]">Custom PC · Gaming · Workstation</span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.1] md:leading-[0.95] tracking-tighter text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.8)]">
-              Your Dream PC.<br/>
-              <span style={{ background: 'linear-gradient(135deg, #2563EB 0%, #00D4FF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>We Build It.</span>
-            </h2>
-            <div className="flex flex-col sm:flex-row items-center gap-4 pointer-events-auto mt-2">
-              <a
-                href="/build-pc"
-                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#2563EB] to-[#00D4FF] text-white font-black py-4 px-8 md:px-10 rounded-2xl text-sm md:text-base uppercase tracking-widest shadow-[0_0_30px_rgba(37,99,235,0.7)] hover:shadow-[0_0_50px_rgba(37,99,235,0.9)] hover:scale-105 active:scale-95 transition-all duration-200"
-              >
-                Build My PC
-              </a>
-              <a
-                href="https://wa.me/919010177427?text=Hi!%20I%20want%20to%20build%20a%20custom%20PC."
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm text-white font-bold py-4 px-8 rounded-2xl text-sm md:text-base border border-white/20 hover:bg-white/20 hover:scale-105 active:scale-95 transition-all duration-200"
-              >
-                WhatsApp Us
-              </a>
-            </div>
+        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center items-center px-6">
+          
+          {/* CTA Buttons (Fades in at the very end to match the baked "YOUR DREAM PC" text) */}
+          <motion.div style={{ opacity: opacity4, y: y4 }} className="absolute bottom-16 md:bottom-24 flex flex-col sm:flex-row items-center gap-4 pointer-events-auto">
+            <a
+              href="/build-pc"
+              className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#2563EB] to-[#00D4FF] text-white font-black py-4 px-8 md:px-10 rounded-2xl text-sm md:text-base uppercase tracking-widest shadow-[0_0_30px_rgba(37,99,235,0.7)] hover:shadow-[0_0_50px_rgba(37,99,235,0.9)] hover:scale-105 active:scale-95 transition-all duration-200"
+            >
+              Build My PC
+            </a>
+            <a
+              href="https://wa.me/919010177427?text=Hi!%20I%20want%20to%20build%20a%20custom%20PC."
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-black/40 backdrop-blur-md text-white font-bold py-4 px-8 rounded-2xl text-sm md:text-base border border-white/20 hover:bg-white/20 hover:scale-105 active:scale-95 transition-all duration-200"
+            >
+              WhatsApp Us
+            </a>
           </motion.div>
 
         </div>
