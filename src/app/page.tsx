@@ -65,29 +65,18 @@ export default function Home() {
       <section className="py-8 relative z-10">
         <div className="container mx-auto px-4">
           <div className="relative w-full h-24 md:h-32 lg:h-40 rounded-2xl overflow-hidden group shadow-[0_0_30px_rgba(37,99,235,0.15)] border border-[#1E2D45] hover:border-[#00D4FF]/50 transition-all duration-700">
-            {/* The 1:10 ratio image */}
+            {/* The 1:10 ratio image with baked-in text */}
             <Image 
-              src="/images/banners/long_banner_bg.png" 
-              alt="Charmila Computers Gaming Setup" 
+              src="/images/banners/charmila_text_banner.png" 
+              alt="Charmila Computers Banner" 
               fill 
               className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-1000 ease-out" 
             />
-            {/* Edge fades to blend nicely */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#080C14] via-transparent to-[#080C14] opacity-80" />
-            
-            {/* Central glowing text */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-white/90 drop-shadow-[0_10px_20px_rgba(0,0,0,1)] z-10">
-                Charmila Computers
-              </h2>
-              {/* Extra neon glow layer behind text */}
-              <h2 className="absolute text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-[#00D4FF] to-[#A78BFA] opacity-60 blur-sm mix-blend-screen z-0 group-hover:opacity-100 group-hover:blur-md transition-all duration-700">
-                Charmila Computers
-              </h2>
-            </div>
+            {/* Edge fades to blend nicely into the dark background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080C14] via-transparent to-[#080C14] opacity-80 pointer-events-none" />
             
             {/* Top scanning highlight line */}
-            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#00D4FF]/70 to-transparent group-hover:via-white transition-all duration-700" />
+            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#00D4FF]/70 to-transparent group-hover:via-white transition-all duration-700 pointer-events-none" />
           </div>
         </div>
       </section>
