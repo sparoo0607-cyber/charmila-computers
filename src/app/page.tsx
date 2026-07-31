@@ -83,6 +83,7 @@ export default function Home() {
                 alt="RTX 4090" 
                 fill 
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority={true}
                 className="object-contain p-4 group-hover:scale-105 transition-transform duration-500" 
               />
             </div>
