@@ -38,30 +38,25 @@ const PRODUCTS = [
   },
 ];
 
+import dynamic from 'next/dynamic';
+
+const Hero3D = dynamic(() => import('@/components/home/Hero3D').then(mod => mod.Hero3D), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[600px] md:h-[800px] flex flex-col items-center justify-center bg-[#FAFBFD]">
+      <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+      <p className="text-gray-500 font-sans animate-pulse">Initializing 3D Experience...</p>
+    </div>
+  ),
+});
+
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-[#FAFBFD] font-sans">
       
-      {/* 1. MINIMALIST HERO SECTION */}
-      <section className="w-full pt-32 pb-24 flex flex-col items-center text-center px-4">
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 mb-6">
-          Performance. <span className="text-blue-600">Perfected.</span>
-        </h1>
-        <p className="text-lg md:text-xl text-gray-500 max-w-2xl mb-10">
-          Premium PC components and expert builds. Trusted by professionals and gamers since 2009.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0">
-          <Link href="/build-pc" className="w-full sm:w-auto">
-            <Button className="w-full bg-gray-900 hover:bg-black text-white rounded-full px-8 h-14 text-sm font-semibold transition-all hover:scale-105">
-              Build Your PC
-            </Button>
-          </Link>
-          <Link href="/products" className="w-full sm:w-auto">
-            <Button variant="outline" className="w-full rounded-full px-8 h-14 text-sm font-semibold border-gray-200 text-gray-900 hover:bg-gray-50 transition-all">
-              Shop Components
-            </Button>
-          </Link>
-        </div>
+      {/* 1. INTERACTIVE 3D HERO SECTION */}
+      <section className="w-full relative overflow-hidden">
+        <Hero3D />
       </section>
 
       {/* 2. CLEAN CATEGORY ICONS */}
