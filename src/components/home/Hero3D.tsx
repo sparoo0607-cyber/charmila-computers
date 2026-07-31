@@ -115,15 +115,33 @@ function PCCabinet({
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
-      {/* Main Case Body (Matte White/Black contrast) */}
-      <mesh position={[0, 0, 0]} castShadow receiveShadow>
-        <boxGeometry args={[3.2, 4.2, 2.6]} />
+      {/* Motherboard Tray (Solid Back Wall at -X) */}
+      <mesh position={[-1.6, 0, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.1, 4.2, 2.6]} />
         <meshStandardMaterial color="#FFFFFF" roughness={0.7} metalness={0.1} />
       </mesh>
-      
-      {/* Interior cut-out (Dark) */}
-      <mesh position={[0, 0, -1.2]} receiveShadow>
-        <boxGeometry args={[2.9, 3.9, 0.2]} />
+
+      {/* Rear Panel (Solid Back Wall at -Z) */}
+      <mesh position={[0, 0, -1.3]} castShadow receiveShadow>
+        <boxGeometry args={[3.2, 4.2, 0.1]} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.7} metalness={0.1} />
+      </mesh>
+
+      {/* Top Panel */}
+      <mesh position={[0, 2.05, 0]} castShadow receiveShadow>
+        <boxGeometry args={[3.2, 0.1, 2.6]} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.7} metalness={0.1} />
+      </mesh>
+
+      {/* Bottom Panel */}
+      <mesh position={[0, -2.05, 0]} castShadow receiveShadow>
+        <boxGeometry args={[3.2, 0.1, 2.6]} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.7} metalness={0.1} />
+      </mesh>
+
+      {/* Interior Dark Background on Motherboard Tray */}
+      <mesh position={[-1.54, 0, 0]} receiveShadow>
+        <boxGeometry args={[0.02, 3.9, 2.4]} />
         <meshStandardMaterial color="#020617" roughness={0.9} />
       </mesh>
 
