@@ -13,46 +13,46 @@ import { PromoBanner } from '@/components/home/PromoBanner';
 const PRODUCTS = [
   { 
     id: '1', name: 'MSI GeForce RTX 4070 Super 12G Gaming X Slim Graphics Card', price: 59990, oldPrice: 63999, 
-    image: 'https://images.unsplash.com/photo-1675789182315-bd3511eb9fba?auto=format&fit=crop&q=80&w=400', category: 'graphics-cards'
+    image: '/images/products/rtx_4090_isolated_1785504487639.png', category: 'graphics-cards'
   },
   { 
     id: '2', name: 'Intel Core i5-14600K 14th Gen Processor', price: 22999, oldPrice: 28600, 
-    image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=400', category: 'processors'
+    image: '/images/products/intel_cpu_isolated_1785504512463.png', category: 'processors'
   },
   { 
     id: '3', name: 'ASUS TUF Gaming B760-PLUS WiFi', price: 18499, oldPrice: 21999, 
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=400', category: 'motherboards'
+    image: '/images/products/gaming_motherboard_isolated_1785504525296.png', category: 'motherboards'
   },
   { 
     id: '4', name: 'Corsair Vengeance 16GB DDR5 5200MHz', price: 4799, oldPrice: 6200, 
-    image: 'https://images.unsplash.com/photo-1541029071515-84cc54f84cb5?auto=format&fit=crop&q=80&w=400', category: 'memory'
+    image: '/images/products/ddr5_ram_isolated_1785504561946.png', category: 'memory'
   },
   { 
     id: '5', name: 'AMD Ryzen 7 7800X3D Desktop Processor', price: 34500, oldPrice: 41000, 
-    image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=400', category: 'processors'
+    image: '/images/products/intel_cpu_isolated_1785504512463.png', category: 'processors'
   },
   { 
     id: '6', name: 'Zotac Gaming GeForce RTX 4090 Trinity OC', price: 168900, oldPrice: 180000, 
-    image: 'https://images.unsplash.com/photo-1675789182315-bd3511eb9fba?auto=format&fit=crop&q=80&w=400', category: 'graphics-cards'
+    image: '/images/products/rtx_4090_isolated_1785504487639.png', category: 'graphics-cards'
   },
 ];
 
 const PERIPHERALS = [
   { 
     id: 'p1', name: 'Razer DeathAdder V3 Pro Wireless Gaming Mouse', price: 12499, oldPrice: 14999, 
-    image: 'https://images.unsplash.com/photo-1527814050087-379d447912f0?auto=format&fit=crop&q=80&w=400', category: 'peripherals'
+    image: '/images/products/gaming_mouse_isolated_1785504574761.png', category: 'peripherals'
   },
   { 
     id: 'p2', name: 'HyperX Cloud III Wireless Gaming Headset', price: 13990, oldPrice: 16000, 
-    image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&q=80&w=400', category: 'peripherals'
+    image: '/images/products/gaming_headset_isolated_1785504585000.png', category: 'peripherals'
   },
   { 
     id: 'p3', name: 'Logitech G915 TKL Tenkeyless Lightspeed Wireless', price: 18995, oldPrice: 21995, 
-    image: 'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&q=80&w=400', category: 'peripherals'
+    image: '/images/products/gaming_mouse_isolated_1785504574761.png', category: 'peripherals'
   },
   { 
     id: 'p4', name: 'Sony INZONE M9 27” 4K HDR 144Hz Gaming Monitor', price: 74990, oldPrice: 89990, 
-    image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&q=80&w=400', category: 'monitors'
+    image: '/images/products/pc_cabinet_isolated_1785504605408.png', category: 'monitors'
   },
 ];
 
@@ -79,7 +79,7 @@ export default function Home() {
             
             <div className="relative h-64 w-full my-auto flex items-center justify-center">
               <Image 
-                src="https://images.unsplash.com/photo-1675789182315-bd3511eb9fba?auto=format&fit=crop&q=80&w=600" 
+                src="/images/products/rtx_4090_isolated_1785504487639.png" 
                 alt="RTX 4090" 
                 fill 
                 className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" 

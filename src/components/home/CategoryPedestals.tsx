@@ -9,12 +9,12 @@ interface CategoryItem {
 }
 
 const CATEGORIES: CategoryItem[] = [
-  { id: '1', name: 'Processors', link: '/products?category=processors', image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=400' },
-  { id: '2', name: 'Motherboards', link: '/products?category=motherboards', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=400' },
-  { id: '3', name: 'Graphics Cards', link: '/products?category=graphics-cards', image: 'https://images.unsplash.com/photo-1675789182315-bd3511eb9fba?auto=format&fit=crop&q=80&w=400' },
-  { id: '4', name: 'Memory', link: '/products?category=memory', image: 'https://images.unsplash.com/photo-1541029071515-84cc54f84cb5?auto=format&fit=crop&q=80&w=400' },
-  { id: '5', name: 'Coolers', link: '/products?category=coolers', image: 'https://images.unsplash.com/photo-1623910279612-4eb1522f98f6?auto=format&fit=crop&q=80&w=400' },
-  { id: '6', name: 'Cabinets', link: '/products?category=cabinets', image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=400' },
+  { id: '1', name: 'Processors', link: '/products?category=processors', image: '/images/products/intel_cpu_isolated_1785504512463.png' },
+  { id: '2', name: 'Motherboards', link: '/products?category=motherboards', image: '/images/products/gaming_motherboard_isolated_1785504525296.png' },
+  { id: '3', name: 'Graphics Cards', link: '/products?category=graphics-cards', image: '/images/products/rtx_4090_isolated_1785504487639.png' },
+  { id: '4', name: 'Memory', link: '/products?category=memory', image: '/images/products/ddr5_ram_isolated_1785504561946.png' },
+  { id: '5', name: 'Coolers', link: '/products?category=coolers', image: '/images/products/aio_cooler_isolated_1785504617114.png' },
+  { id: '6', name: 'Cabinets', link: '/products?category=cabinets', image: '/images/products/pc_cabinet_isolated_1785504605408.png' },
 ];
 
 export function CategoryPedestals() {
