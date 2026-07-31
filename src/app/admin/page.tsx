@@ -2,6 +2,8 @@ import { getDashboardStats } from '@/lib/actions/admin.actions';
 import { Package, AlertCircle, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboardPage() {
   const stats = await getDashboardStats();
 
