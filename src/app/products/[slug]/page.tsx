@@ -56,7 +56,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 src={images[0]} 
                 alt={product.name} 
                 fill 
-                className="object-contain p-8" 
+                className="object-contain p-8 mix-blend-darken" 
               />
             </div>
             {images.length > 1 && (
@@ -132,7 +132,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         src={recImages[0]} 
                         alt={rec.name} 
                         fill 
-                        className="object-contain group-hover:scale-105 transition-transform duration-500" 
+                        className="object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-darken" 
                       />
                     </div>
                     <div className="flex flex-col flex-1">

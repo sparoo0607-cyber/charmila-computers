@@ -101,7 +101,7 @@ export function CompareSearchModal({ isOpen, onClose, categorySlug }: { isOpen: 
                 <div key={product.id} className={`flex items-center justify-between p-4 rounded-2xl transition-colors ${isAlreadyAdded ? 'opacity-50 bg-gray-50' : 'hover:bg-gray-50'}`}>
                   <div className="flex items-center gap-4 flex-1 overflow-hidden">
                     <div className="relative h-14 w-14 bg-white border border-gray-100 rounded-xl p-1 flex-shrink-0">
-                      <Image src={images[0]} alt={product.name} fill className="object-contain p-2" />
+                      <Image src={images[0]} alt={product.name} fill className="object-contain p-2 mix-blend-darken" />
                     </div>
                     <div className="truncate">
                       <h4 className="font-bold text-gray-900 truncate">{product.name}</h4>

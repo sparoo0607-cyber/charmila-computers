@@ -82,7 +82,7 @@ export default function Home() {
                 src="/images/products/rtx_4090_isolated_1785504487639.png" 
                 alt="RTX 4090" 
                 fill 
-                className="object-contain p-4 group-hover:scale-105 transition-transform duration-500" 
+                className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 mix-blend-darken" 
               />
             </div>
             
@@ -118,7 +118,7 @@ export default function Home() {
         linkText="Shop Cooling"
         linkHref="/products?category=coolers"
         align="left"
-        bgColor="bg-gray-900"
+        bgColor="bg-white"
       />
 
       {/* 5. GAMING ZONE */}
