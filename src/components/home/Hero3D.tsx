@@ -281,7 +281,6 @@ export default function Hero3D({ scrollProgress, isBooted }: { scrollProgress: M
   return (
     <div className="w-full h-full min-h-[600px]">
       <Canvas shadows camera={{ position: [5, 2, 6], fov: 45 }}>
-        <PerspectiveCamera makeDefault position={[5, 2, 6]} fov={45} />
         
         {/* Lights */}
         <ambientLight intensity={isBooted ? 0.3 : 0.05} />
