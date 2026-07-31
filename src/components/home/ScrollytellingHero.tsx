@@ -23,25 +23,45 @@ export const ScrollytellingHero = () => {
     offset: ["start start", "end end"]
   });
 
-  // Preload images
+  // Preload images sequentially in batches to prevent network bottleneck
   useEffect(() => {
-    let loaded = 0;
-    for (let i = 1; i <= FRAME_COUNT; i++) {
-      const img = new Image();
-      img.src = getFramePath(i);
-      img.onload = () => {
-        loaded++;
-        setImagesLoaded(loaded);
-        // Draw first frame as soon as it's loaded
-        if (i === 1 && canvasRef.current) {
-          const ctx = canvasRef.current.getContext('2d');
-          if (ctx) {
-            renderFrame(1);
+    let loadedCount = 0;
+
+    const loadImage = (index: number): Promise<void> => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = getFramePath(index);
+        img.onload = () => {
+          loadedCount++;
+          setImagesLoaded(loadedCount);
+          // Draw first frame as soon as it's loaded
+          if (index === 1 && canvasRef.current) {
+            const ctx = canvasRef.current.getContext('2d');
+            if (ctx) renderFrame(1);
           }
+          resolve();
+        };
+        img.onerror = () => resolve(); // Resolve anyway on error
+        preloadedImages[index] = img;
+      });
+    };
+
+    const preloadSequentially = async () => {
+      // Load frame 1 first for immediate display
+      await loadImage(1);
+      
+      // Load remaining frames in small batches
+      const BATCH_SIZE = 8;
+      for (let i = 2; i <= FRAME_COUNT; i += BATCH_SIZE) {
+        const batch = [];
+        for (let j = 0; j < BATCH_SIZE && (i + j) <= FRAME_COUNT; j++) {
+          batch.push(loadImage(i + j));
         }
-      };
-      preloadedImages[i] = img;
-    }
+        await Promise.all(batch);
+      }
+    };
+
+    preloadSequentially();
   }, []);
 
   const renderFrame = (index: number) => {
