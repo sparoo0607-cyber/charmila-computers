@@ -36,17 +36,58 @@ const PRODUCTS = [
     image: 'https://images.unsplash.com/photo-1541029071515-84cc54f84cb5?auto=format&fit=crop&q=80&w=400', 
     rating: 4.8, reviews: 214 
   },
-];
-
-import { Hero3DWrapper } from '@/components/home/Hero3DWrapper';
-
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[#FAFBFD] font-sans">
       
-      {/* 1. INTERACTIVE 3D HERO SECTION */}
-      <section className="w-full relative overflow-hidden">
-        <Hero3DWrapper />
+      {/* 1. PREMIUM HERO SECTION */}
+      <section className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#020617]">
+        {/* Background glow and images */}
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=2000" 
+            alt="Premium Gaming PC" 
+            fill 
+            className="object-cover opacity-40 mix-blend-luminosity"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-[#020617]/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-transparent to-[#020617]/80" />
+          
+          {/* Animated Glow Orbs */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/30 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
+            <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />
+            <span className="text-xs sm:text-sm font-medium text-blue-100 tracking-wide uppercase">India's Premium PC Destination</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 font-heading">
+            Performance. <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Perfected.</span>
+          </h1>
+          
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mb-12 font-sans font-light">
+            Experience uncompromising power with masterfully crafted, custom-built PCs for gamers, creators, and professionals.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto px-4 sm:px-0">
+            <Link href="/build-pc" className="w-full sm:w-auto group relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full blur opacity-40 group-hover:opacity-100 transition duration-500" />
+              <Button className="relative w-full bg-white hover:bg-gray-50 text-gray-900 rounded-full px-10 h-16 text-lg font-bold transition-transform hover:scale-105 shadow-[0_0_40px_rgba(37,99,235,0.3)]">
+                Build Your Dream PC
+              </Button>
+            </Link>
+            <Link href="/products" className="w-full sm:w-auto">
+              <Button variant="outline" className="w-full rounded-full px-10 h-16 text-lg font-bold border-white/20 text-white bg-white/5 backdrop-blur-md hover:bg-white/10 transition-transform hover:scale-105">
+                Explore Components
+              </Button>
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* 2. CLEAN CATEGORY ICONS */}
