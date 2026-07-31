@@ -46,108 +46,104 @@ export function CinematicHero() {
             transition={{ duration: 2, delay: 0.3 }}
             className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px]"
           />
+    <section className="relative min-h-screen bg-[#020617] w-full overflow-hidden flex items-center">
+      {/* Background Ambient Glow */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+        className="absolute inset-0 pointer-events-none"
+      >
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[100px]" />
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/cubes.png')] opacity-[0.02]" />
+      </motion.div>
+
+      <div className="w-full relative flex items-center h-full">
+        {/* Text and UI Content (Left Side) */}
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-4 flex flex-col items-start justify-center h-full pointer-events-none py-20">
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mb-6 flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md"
+          >
+            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <span className="text-white text-xs font-bold tracking-widest uppercase">India's</span>
+          </motion.div>
+
+          <h1 className="text-6xl md:text-8xl font-black text-white leading-[1.1] tracking-tight mb-8 pointer-events-auto">
+            <motion.span 
+              initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.8, delay: 0.7, type: 'spring' }}
+              className="block"
+            >
+              Premium PC
+            </motion.span>
+            <motion.span 
+              initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.8, delay: 0.9, type: 'spring' }}
+              className="block text-blue-500"
+            >
+              Destination.
+            </motion.span>
+          </h1>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+            className="text-gray-400 text-lg md:text-xl max-w-xl mb-12 font-light leading-relaxed"
+          >
+            Experience uncompromising power with masterfully crafted, custom-built PCs for gamers, creators, and professionals.
+          </motion.p>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 1.3, type: 'spring' }}
+            className="flex flex-wrap items-center gap-6 pointer-events-auto"
+          >
+            <Link href="/build-pc">
+              <Button className="bg-white text-gray-900 hover:bg-gray-100 rounded-full font-bold px-8 py-7 text-base transition-transform hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+                Build Your Dream PC <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/products">
+              <Button variant="outline" className="text-white border-white/20 hover:bg-white/10 rounded-full font-bold px-8 py-7 text-base backdrop-blur-md">
+                Explore Components
+              </Button>
+            </Link>
+          </motion.div>
+
+          {/* Trust Indicators */}
           <motion.div 
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.2 }}
-            transition={{ duration: 2, delay: 0.8 }}
-            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600 rounded-full blur-[120px]"
-          />
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.8 }}
+            className="mt-16 flex items-center gap-8 text-gray-400 text-sm font-medium"
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-yellow-500">★★★★★</span>
+              <span>4.9/5 Rating</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              <span>15+ Years</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              <span>30K+ Customers</span>
+            </div>
+          </motion.div>
         </div>
 
-        {/* Text and UI Content (Left Side) */}
-        <motion.div 
-          style={{ opacity: textOpacity, y: textY }}
-          className="relative z-20 w-full max-w-7xl mx-auto px-4 flex flex-col items-start justify-center h-full pointer-events-none"
-        >
-          <div className="pointer-events-auto max-w-2xl">
-            {/* Tagline */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6"
-            >
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />
-              <span className="text-sm font-medium text-blue-100 tracking-wide uppercase">India's</span>
-            </motion.div>
-            
-            {/* Heading Lines */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 font-heading leading-tight">
-              <motion.div
-                initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-              >
-                Premium PC
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
-                className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300"
-              >
-                Destination.
-              </motion.div>
-            </h1>
-            
-            {/* Description */}
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0, ease: 'easeOut' }}
-              className="text-lg md:text-xl text-gray-400 mb-10 font-sans font-light max-w-xl"
-            >
-              Experience uncompromising power with masterfully crafted, custom-built PCs for gamers, creators, and professionals.
-            </motion.p>
-            
-            {/* Buttons */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 1.2, type: 'spring', bounce: 0.4 }}
-              className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto"
-            >
-              <Link href="/build-pc" className="group relative w-full sm:w-auto">
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full blur opacity-40 group-hover:opacity-100 transition duration-500" />
-                <Button className="relative w-full bg-white hover:bg-gray-50 text-gray-900 rounded-full px-10 h-16 text-lg font-bold transition-all hover:scale-105 hover:-translate-y-1 shadow-[0_0_40px_rgba(37,99,235,0.3)]">
-                  Build Your Dream PC <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
-                </Button>
-              </Link>
-              <Link href="/products" className="w-full sm:w-auto">
-                <Button variant="outline" className="w-full rounded-full px-10 h-16 text-lg font-bold border-white/20 text-white bg-white/5 backdrop-blur-md hover:bg-white/10 transition-all hover:-translate-y-1">
-                  Explore Components
-                </Button>
-              </Link>
-            </motion.div>
-
-            {/* Trust Indicators */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.4 }}
-              className="mt-16 flex items-center gap-8 text-gray-400"
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex text-yellow-500 text-sm">★★★★★</div>
-                <span className="text-sm font-medium">4.9/5 Rating</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span className="text-sm font-medium">15+ Years</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                <span className="text-sm font-medium">30K+ Customers</span>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-
         {/* Image Container (Right Side) */}
-        <motion.div 
-          style={{ y: useTransform(scrollYProgress, [0, 1], [0, 150]) }}
-          className="absolute inset-0 z-10 w-full h-full pointer-events-none md:w-1/2 md:left-auto md:right-10 flex items-center justify-center"
-        >
+        <div className="absolute inset-0 z-10 w-full h-full pointer-events-none md:w-1/2 md:left-auto md:right-10 flex items-center justify-center">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, x: 50 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -164,25 +160,7 @@ export function CinematicHero() {
             {/* Subtle overlay gradient to blend with the dark theme */}
             <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/80 via-transparent to-transparent mix-blend-overlay" />
           </motion.div>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div 
-          style={{ opacity: textOpacity }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2.2 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 z-20 pointer-events-none"
-        >
-          <motion.div 
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          >
-            <Mouse className="h-6 w-6" />
-          </motion.div>
-          <span className="text-xs font-medium tracking-widest uppercase">Scroll to Explore</span>
-        </motion.div>
-
+        </div>
       </div>
     </section>
   );
