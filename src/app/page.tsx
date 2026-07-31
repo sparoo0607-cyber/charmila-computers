@@ -64,8 +64,8 @@ export default function Home() {
       {/* ── 3.5. LONG PICTURE BANNER ─────────────────────── */}
       <section className="py-8 relative z-10">
         <div className="container mx-auto px-4">
-          <div className="relative w-full h-24 md:h-32 lg:h-40 rounded-2xl overflow-hidden group shadow-[0_0_30px_rgba(37,99,235,0.15)] border border-[#1E2D45] hover:border-[#00D4FF]/50 transition-all duration-700">
-            {/* The 1:10 ratio image with baked-in text */}
+          <div className="relative w-full h-24 md:h-32 lg:h-40 rounded-2xl overflow-hidden group shadow-[0_0_30px_rgba(37,99,235,0.15)] border border-[#1E2D45] hover:border-[#00D4FF]/50 transition-all duration-700 flex items-center justify-center">
+            {/* The 1:10 ratio image */}
             <Image 
               src="/images/banners/charmila_text_banner.png" 
               alt="Charmila Computers Banner" 
@@ -73,7 +73,18 @@ export default function Home() {
               className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-1000 ease-out" 
             />
             {/* Edge fades to blend nicely into the dark background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#080C14] via-transparent to-[#080C14] opacity-80 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080C14] via-black/40 to-[#080C14] opacity-90 pointer-events-none" />
+            
+            {/* Highly stylized HTML text that looks like a neon sign in the image */}
+            <div className="relative z-10 flex items-center justify-center pointer-events-none w-full h-full">
+              <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] z-10">
+                Charmila Computers
+              </h2>
+              {/* Extra neon glow layer behind text */}
+              <h2 className="absolute text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-[#00D4FF] to-[#A78BFA] opacity-80 blur-md z-0 transition-all duration-700 group-hover:blur-lg group-hover:opacity-100">
+                Charmila Computers
+              </h2>
+            </div>
             
             {/* Top scanning highlight line */}
             <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#00D4FF]/70 to-transparent group-hover:via-white transition-all duration-700 pointer-events-none" />
