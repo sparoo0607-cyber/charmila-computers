@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, Mail, MapPin, MessageCircle, Instagram, ExternalLink, Zap, ChevronRight } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageCircle, Camera, ExternalLink, Zap, ChevronRight } from 'lucide-react';
 
 const QUICK_LINKS = [
   { label: 'All Products', href: '/products' },
@@ -62,7 +62,7 @@ export function Footer() {
                 className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#0F1624] border border-[#1E2D45] text-[#E1306C] hover:bg-gradient-to-br hover:from-[#833ab4] hover:via-[#fd1d1d] hover:to-[#fcb045] hover:text-white hover:border-transparent transition-all duration-200 hover:shadow-[0_0_12px_rgba(225,48,108,0.4)]"
                 aria-label="Instagram"
               >
-                <Instagram className="h-4 w-4" />
+                <Camera className="h-4 w-4" />
               </a>
               <a
                 href="https://www.google.com/maps/place/Charmilas+Computer+Store"
