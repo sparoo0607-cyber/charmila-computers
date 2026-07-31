@@ -118,18 +118,22 @@ export const ScrollytellingHero = () => {
   // Section 1
   const opacity1 = useTransform(scrollYProgress, [0, 0.05, 0.15, 0.2], [1, 1, 0, 0]);
   const y1 = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
+  const visibility1 = useTransform(scrollYProgress, [0, 0.15, 0.2], ["visible", "visible", "hidden"]);
 
   // Section 2
   const opacity2 = useTransform(scrollYProgress, [0.2, 0.25, 0.4, 0.45], [0, 1, 1, 0]);
   const y2 = useTransform(scrollYProgress, [0.2, 0.45], [50, -50]);
+  const visibility2 = useTransform(scrollYProgress, [0.15, 0.2, 0.45, 0.5], ["hidden", "visible", "visible", "hidden"]);
 
   // Section 3
   const opacity3 = useTransform(scrollYProgress, [0.45, 0.5, 0.65, 0.7], [0, 1, 1, 0]);
   const y3 = useTransform(scrollYProgress, [0.45, 0.7], [50, -50]);
+  const visibility3 = useTransform(scrollYProgress, [0.4, 0.45, 0.7, 0.75], ["hidden", "visible", "visible", "hidden"]);
 
   // Section 4
   const opacity4 = useTransform(scrollYProgress, [0.75, 0.8, 1, 1], [0, 1, 1, 1]);
   const y4 = useTransform(scrollYProgress, [0.75, 1], [50, 0]);
+  const visibility4 = useTransform(scrollYProgress, [0.7, 0.75, 1], ["hidden", "visible", "visible"]);
 
   return (
     <section ref={containerRef} className="relative h-[400vh] bg-black">
@@ -149,7 +153,7 @@ export const ScrollytellingHero = () => {
         <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center items-center text-white px-6 text-center">
 
           {/* Scene 1 — Power */}
-          <motion.div initial={{ opacity: 1 }} style={{ opacity: opacity1, y: y1 }} className="absolute flex flex-col items-center gap-4 w-full">
+          <motion.div initial={{ opacity: 1, visibility: "visible" }} style={{ opacity: opacity1, y: y1, visibility: visibility1 as any }} className="absolute flex flex-col items-center gap-4 w-full">
             <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#00D4FF] drop-shadow-[0_0_12px_rgba(0,212,255,0.8)]">Charmila Computers · Tirupati</span>
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[1.1] md:leading-none tracking-tighter text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.8)]">
               Build the<br/>
@@ -159,7 +163,7 @@ export const ScrollytellingHero = () => {
           </motion.div>
 
           {/* Scene 2 — GPU */}
-          <motion.div initial={{ opacity: 0 }} style={{ opacity: opacity2, y: y2 }} className="absolute flex flex-col items-center gap-4 w-full">
+          <motion.div initial={{ opacity: 0, visibility: "hidden" }} style={{ opacity: opacity2, y: y2, visibility: visibility2 as any }} className="absolute flex flex-col items-center gap-4 w-full">
             <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#F59E0B] drop-shadow-[0_0_12px_rgba(245,158,11,0.8)]">Graphics · RTX 4090</span>
             <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[1.1] md:leading-none tracking-tighter text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.8)]">
               Raw Power.<br/>
@@ -168,7 +172,7 @@ export const ScrollytellingHero = () => {
           </motion.div>
 
           {/* Scene 3 — Performance */}
-          <motion.div initial={{ opacity: 0 }} style={{ opacity: opacity3, y: y3 }} className="absolute flex flex-col items-center gap-4 w-full">
+          <motion.div initial={{ opacity: 0, visibility: "hidden" }} style={{ opacity: opacity3, y: y3, visibility: visibility3 as any }} className="absolute flex flex-col items-center gap-4 w-full">
             <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#22C55E] drop-shadow-[0_0_12px_rgba(34,197,94,0.8)]">Expert Assembly · 15+ Years</span>
             <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[1.1] md:leading-none tracking-tighter text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.8)]">
               Precision<br/>
@@ -177,7 +181,7 @@ export const ScrollytellingHero = () => {
           </motion.div>
 
           {/* Scene 4 — CTA */}
-          <motion.div initial={{ opacity: 0 }} style={{ opacity: opacity4, y: y4 }} className="absolute flex flex-col items-center gap-6 w-full">
+          <motion.div initial={{ opacity: 0, visibility: "hidden" }} style={{ opacity: opacity4, y: y4, visibility: visibility4 as any }} className="absolute flex flex-col items-center gap-6 w-full">
             <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#00D4FF] drop-shadow-[0_0_12px_rgba(0,212,255,0.8)]">Custom PC · Gaming · Workstation</span>
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[1.1] md:leading-[0.95] tracking-tighter text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.8)]">
               Your Dream PC.<br/>
