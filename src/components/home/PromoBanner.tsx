@@ -65,7 +65,7 @@ export function PromoBanner({
               alt={title} 
               fill 
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className={`object-contain p-4 filter drop-shadow-2xl transition-transform duration-700 hover:scale-105 mix-blend-darken`}
+              className={`object-contain p-4 filter drop-shadow-2xl transition-transform duration-700 hover:scale-105`}
             />
           </div>
 

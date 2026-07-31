@@ -57,7 +57,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 alt={product.name} 
                 fill 
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-contain p-8 mix-blend-darken" 
+                className="object-contain p-8" 
               />
             </div>
             {images.length > 1 && (
@@ -134,7 +134,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         alt={rec.name} 
                         fill 
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-darken" 
+                        className="object-contain group-hover:scale-105 transition-transform duration-500" 
                       />
                     </div>
                     <div className="flex flex-col flex-1">
