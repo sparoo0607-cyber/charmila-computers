@@ -5,7 +5,7 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { CinematicHero } from '@/components/home/CinematicHero';
+import { ScrollytellingHero } from '@/components/home/ScrollytellingHero';
 import { CategoryPedestals } from '@/components/home/CategoryPedestals';
 import { ProductCard } from '@/components/ui/ProductCard';
 import { PromoBanner } from '@/components/home/PromoBanner';
@@ -60,8 +60,8 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[#F5F7FA] font-sans">
       
-      {/* 1. CINEMATIC HERO SECTION */}
-      <CinematicHero />
+      {/* 1. SCROLLYTELLING HERO SECTION */}
+      <ScrollytellingHero />
 
       {/* 2. CATEGORY PEDESTALS */}
       <CategoryPedestals />
@@ -111,12 +111,14 @@ export default function Home() {
 
       {/* 4. WIDE PROMO BANNER */}
       <PromoBanner 
-        image="https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?auto=format&fit=crop&q=100&w=1920"
+        imageSrc="https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?auto=format&fit=crop&q=100&w=1920"
         title="MAXIMUM COOLING. MINIMUM NOISE."
         subtitle="Thermaltake Liquid Cooling"
-        buttonText="Shop Cooling"
-        buttonLink="/products?category=coolers"
+        description="Experience the ultimate in thermal performance with our custom loop and AIO liquid cooling solutions."
+        linkText="Shop Cooling"
+        linkHref="/products?category=coolers"
         align="left"
+        bgColor="bg-gray-900"
       />
 
       {/* 5. GAMING ZONE */}

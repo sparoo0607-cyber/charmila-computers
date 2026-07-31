@@ -18,7 +18,7 @@ export function ProductCard({ id, name, price, oldPrice, image, category }: Prod
   return (
     <div className="group relative bg-white rounded-xl shadow-sm border border-gray-100 p-4 transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-full">
       {/* Discount Badge */}
-      <div className="absolute top-4 left-4 z-10 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded">
+      <div className="absolute top-4 left-4 z-10 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded">
         -{discount}%
       </div>
 

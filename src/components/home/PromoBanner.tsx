@@ -1,63 +1,75 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 interface PromoBannerProps {
-  image: string;
-  title?: string;
+  title: string;
   subtitle?: string;
-  buttonText?: string;
-  buttonLink?: string;
-  align?: 'left' | 'center' | 'right';
-  className?: string;
+  description?: string;
+  imageSrc: string;
+  linkText?: string;
+  linkHref: string;
+  bgColor?: string;
+  textColor?: string;
+  align?: 'left' | 'right';
 }
 
-export function PromoBanner({ 
-  image, 
-  title, 
-  subtitle, 
-  buttonText, 
-  buttonLink, 
-  align = 'center',
-  className = ''
+export function PromoBanner({
+  title,
+  subtitle,
+  description,
+  imageSrc,
+  linkText = 'Shop Now',
+  linkHref,
+  bgColor = 'bg-gray-900',
+  textColor = 'text-white',
+  align = 'left'
 }: PromoBannerProps) {
-  
-  const alignClass = {
-    'left': 'items-start text-left',
-    'center': 'items-center text-center',
-    'right': 'items-end text-right'
-  }[align];
+  const isLeft = align === 'left';
 
   return (
-    <section className={`relative w-full h-[300px] md:h-[400px] overflow-hidden my-8 ${className}`}>
-      <Image 
-        src={image}
-        alt={title || "Promotional Banner"}
-        fill
-        className="object-cover"
-      />
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/40" />
+    <section className={`w-full overflow-hidden ${bgColor} my-8`}>
+      <div className="container mx-auto px-4">
+        <div className={`flex flex-col md:flex-row items-center justify-between py-12 md:py-0 ${isLeft ? '' : 'md:flex-row-reverse'}`}>
+          
+          {/* Text Content */}
+          <div className={`flex-1 flex flex-col justify-center space-y-6 ${textColor} py-8 md:py-24 z-10 ${isLeft ? 'md:pr-12' : 'md:pl-12'}`}>
+            {subtitle && (
+              <h4 className="text-sm md:text-base font-bold uppercase tracking-[0.2em] text-red-500">
+                {subtitle}
+              </h4>
+            )}
+            <h2 className="text-3xl md:text-5xl font-black uppercase leading-tight">
+              {title}
+            </h2>
+            {description && (
+              <p className="text-base md:text-lg opacity-80 max-w-xl">
+                {description}
+              </p>
+            )}
+            <div>
+              <Link 
+                href={linkHref}
+                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-full transition-all hover:scale-105 shadow-lg shadow-red-600/30"
+              >
+                {linkText}
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
 
-      {title && (
-        <div className={`relative z-10 w-full h-full container mx-auto px-8 flex flex-col justify-center ${alignClass}`}>
-          {subtitle && (
-            <span className="text-blue-400 font-bold tracking-widest uppercase mb-2">
-              {subtitle}
-            </span>
-          )}
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight max-w-2xl shadow-sm">
-            {title}
-          </h2>
-          {buttonText && buttonLink && (
-            <Link href={buttonLink}>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white border-0 font-bold px-8 py-6 rounded text-sm uppercase tracking-wide">
-                {buttonText}
-              </Button>
-            </Link>
-          )}
+          {/* Image Content */}
+          <div className="flex-1 relative w-full h-[300px] md:h-[500px] flex items-center justify-center">
+            <Image 
+              src={imageSrc} 
+              alt={title} 
+              fill 
+              className={`object-contain p-4 filter drop-shadow-2xl transition-transform duration-700 hover:scale-105`}
+            />
+          </div>
+
         </div>
-      )}
+      </div>
     </section>
   );
 }
