@@ -1,5 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { MouseEvent } from 'react';
 
 interface ProductCardProps {
   id: string;
@@ -12,41 +16,80 @@ interface ProductCardProps {
 
 export function ProductCard({ id, name, price, oldPrice, image, category }: ProductCardProps) {
   const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
-
   const whatsappMessage = `Hello Charmila Computers,%0a%0aI would like to purchase:%0a*Product Name:* ${name}%0a*Price:* ₹${price.toLocaleString('en-IN')}%0a%0aPlease contact me.`;
 
-  return (
-    <div className="group relative rounded-2xl border border-[#1E2D45] bg-[#0F1624] p-4 flex flex-col h-full transition-all duration-300 hover:-translate-y-1.5 hover:border-[#2563EB]/60 hover:shadow-[0_8px_30px_rgba(37,99,235,0.2)]">
-      {/* Glow accent line */}
-      <div className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl bg-gradient-to-r from-transparent via-[#2563EB]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  // 3D Hover Spotlight Effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-      {/* Discount Badge */}
-      <div className="absolute top-3 left-3 z-10 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-[0_0_8px_rgba(239,68,68,0.5)]">
-        -{discount}%
+  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      className="group relative rounded-[24px] border border-[#1E2D45] bg-[#0A0F1A]/80 backdrop-blur-md p-5 flex flex-col h-full overflow-hidden shadow-[0_0_0_rgba(0,0,0,0)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.15)] hover:border-[#2563EB]/50 z-10"
+    >
+      {/* Dynamic Spotlight */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-[24px] opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              400px circle at ${mouseX}px ${mouseY}px,
+              rgba(37, 99, 235, 0.15),
+              transparent 80%
+            )
+          `,
+        }}
+      />
+      
+      {/* Top Glow Border */}
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#2563EB]/0 to-transparent group-hover:via-[#00D4FF]/80 transition-all duration-700" />
+
+      {/* Badges */}
+      <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
+        <div className="bg-[#EF4444] text-white text-[10px] font-black px-2.5 py-1 rounded-md shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+          -{discount}%
+        </div>
       </div>
 
       {/* Product Image */}
-      <Link href={`/products/${id}`} className="relative h-44 w-full mb-3 flex items-center justify-center overflow-hidden rounded-xl bg-[#080C14]">
+      <Link href={`/products/${id}`} className="relative h-48 w-full mb-5 flex items-center justify-center overflow-hidden rounded-2xl bg-[#040812] group-hover:bg-[#080C14] transition-colors border border-transparent group-hover:border-[#1E2D45]/50">
+        <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.03] mix-blend-overlay pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#2563EB] opacity-0 blur-3xl rounded-full group-hover:opacity-20 transition-opacity duration-700" />
         <Image
           src={image}
           alt={name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-contain p-3 group-hover:scale-110 transition-transform duration-500"
+          className="object-contain p-4 group-hover:scale-110 group-hover:-rotate-3 group-hover:drop-shadow-[0_15px_25px_rgba(37,99,235,0.4)] transition-all duration-700 ease-out z-10"
         />
       </Link>
 
       {/* Product Details */}
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 relative z-10">
+        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#2563EB] mb-2 group-hover:text-[#00D4FF] transition-colors">
+          {category}
+        </span>
         <Link href={`/products/${id}`}>
-          <h3 className="text-xs font-medium text-[#94A3B8] leading-snug mb-3 line-clamp-2 hover:text-white transition-colors">
+          <h3 className="text-sm font-bold text-[#94A3B8] leading-snug mb-4 line-clamp-2 group-hover:text-white transition-colors">
             {name}
           </h3>
         </Link>
 
-        <div className="mt-auto flex flex-col gap-0.5 mb-3">
-          <span className="text-[11px] text-[#475569] line-through">₹{oldPrice.toLocaleString('en-IN')}</span>
-          <span className="text-xl font-black text-white tracking-tight">₹{price.toLocaleString('en-IN')}</span>
+        <div className="mt-auto flex items-end justify-between mb-5">
+          <div className="flex flex-col gap-1">
+            <span className="text-[10px] font-bold text-[#475569] line-through decoration-[#EF4444]/50">₹{oldPrice.toLocaleString('en-IN')}</span>
+            <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-[#94A3B8] tracking-tight">
+              ₹{price.toLocaleString('en-IN')}
+            </span>
+          </div>
         </div>
 
         {/* WhatsApp Buy Button */}
@@ -54,11 +97,16 @@ export function ProductCard({ id, name, price, oldPrice, image, category }: Prod
           href={`https://wa.me/919010177427?text=${whatsappMessage}`}
           target="_blank"
           rel="noreferrer"
-          className="w-full text-center bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] hover:from-[#1D4ED8] hover:to-[#1E40AF] text-white text-[11px] font-bold py-2.5 rounded-xl transition-all duration-200 uppercase tracking-wider hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] active:scale-95"
+          className="relative w-full overflow-hidden rounded-xl p-[1px] group/btn"
         >
-          Buy on WhatsApp
+          <span className="absolute inset-0 bg-gradient-to-r from-[#2563EB] via-[#00D4FF] to-[#2563EB] opacity-70 group-hover/btn:opacity-100 transition-opacity duration-300" />
+          <div className="relative w-full bg-[#040812] group-hover/btn:bg-transparent transition-colors duration-300 rounded-xl px-4 py-3 flex items-center justify-center">
+            <span className="text-xs font-black text-white uppercase tracking-widest group-hover/btn:text-black transition-colors duration-300">
+              Buy on WhatsApp
+            </span>
+          </div>
         </a>
       </div>
-    </div>
+    </motion.div>
   );
 }

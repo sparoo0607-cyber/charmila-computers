@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 import { ProductFilters } from '@/components/products/ProductFilters';
 import { ProductSort } from '@/components/products/ProductSort';
 import { ProductCardActions } from '@/components/products/ProductCardActions';
+import { ProductGridCard } from '@/components/products/ProductGridCard';
 
 export default async function ProductsPage(props: {
   searchParams: Promise<{ category?: string | string[], brand?: string | string[], sort?: string, search?: string, minPrice?: string, maxPrice?: string, inStock?: string }>
@@ -55,58 +56,25 @@ export default async function ProductsPage(props: {
             <ProductSort />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => {
-              const images = JSON.parse(product.images);
+              const images = JSON.parse(product.images || '[]');
               const compareProduct = {
                 id: product.id,
                 name: product.name,
                 slug: product.slug,
                 price: product.price,
-                image: images[0],
+                image: images[0] || '/images/placeholder.png',
                 category: { name: product.category.name, slug: product.category.slug },
                 brand: { name: product.brand?.name || 'Unknown' },
                 attributes: product.attributes || '{}',
               };
               return (
-                <div
-                  key={product.id}
-                  className="group relative rounded-2xl border border-[#1E2D45] bg-[#0F1624] p-4 flex flex-col h-full transition-all duration-300 hover:-translate-y-1.5 hover:border-[#2563EB]/50 hover:shadow-[0_8px_30px_rgba(37,99,235,0.2)] overflow-hidden"
-                >
-                  {/* Hover glow line */}
-                  <div className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl bg-gradient-to-r from-transparent via-[#2563EB]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                  {/* Product Image */}
-                  <Link href={`/products/${product.slug}`} className="relative h-48 w-full mb-4 rounded-xl overflow-hidden bg-[#080C14] flex items-center justify-center">
-                    <Image
-                      src={images[0] || '/images/placeholder.png'}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-contain p-3 group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </Link>
-
-                  <div className="flex flex-col flex-1">
-                    <p className="text-[10px] font-black text-[#2563EB] tracking-[0.2em] uppercase mb-1">{product.brand?.name}</p>
-                    <Link href={`/products/${product.slug}`}>
-                      <h3 className="font-semibold text-sm text-[#94A3B8] mb-3 line-clamp-2 hover:text-white transition-colors leading-snug">{product.name}</h3>
-                    </Link>
-
-                    <div className="mt-auto">
-                      <span className="text-xl font-black text-white tracking-tight">₹{product.price.toLocaleString('en-IN')}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-3 mt-3 border-t border-[#1E2D45]">
-                      <ProductCardActions product={compareProduct} />
-                      <Link href={`/products/${product.slug}`}>
-                        <button className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-2 rounded-lg transition-all hover:shadow-[0_0_12px_rgba(37,99,235,0.4)] active:scale-95">
-                          View Details
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                <ProductGridCard 
+                  key={product.id} 
+                  product={product} 
+                  compareProduct={compareProduct} 
+                />
               );
             })}
           </div>
