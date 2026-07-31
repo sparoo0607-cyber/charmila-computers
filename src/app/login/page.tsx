@@ -54,10 +54,10 @@ export default function LoginPage() {
           </div>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 tracking-tight">
-          Admin Login
+          Sign In
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Secure access to Charmila Computers dashboard
+          Secure access to your account
         </p>
       </div>
 
