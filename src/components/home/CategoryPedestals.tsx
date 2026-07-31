@@ -38,7 +38,7 @@ export function CategoryPedestals() {
                     src={category.image} 
                     alt={category.name} 
                     fill 
-                    className="object-contain mix-blend-multiply filter drop-shadow-xl" 
+                    className="object-contain filter drop-shadow-xl" 
                   />
                 </div>
               </div>

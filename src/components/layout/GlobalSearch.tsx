@@ -129,7 +129,7 @@ export function GlobalSearch() {
                     className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl transition-colors group"
                   >
                     <div className="h-12 w-12 bg-white rounded-lg border border-gray-100 flex items-center justify-center p-1 relative flex-shrink-0">
-                      <Image src={images[0]} alt={product.name} fill className="object-contain p-1 mix-blend-multiply" />
+                      <Image src={images[0]} alt={product.name} fill className="object-contain p-1" />
                     </div>
                     <div className="flex-1 flex flex-col overflow-hidden">
                       <span className="text-sm font-bold text-gray-900 truncate group-hover:text-blue-600 transition-colors">{product.name}</span>

@@ -91,7 +91,7 @@ export default function ComparePage() {
                       <X className="h-4 w-4" />
                     </button>
                     <div className="relative h-40 w-full mb-4 bg-gray-50 rounded-xl p-4">
-                      <Image src={item.image} alt={item.name} fill className="object-contain mix-blend-multiply p-2" />
+                      <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
                     </div>
                     <div className="text-xs font-bold text-blue-600 tracking-wider uppercase mb-1">{item.brand?.name || 'Unknown'}</div>
                     <Link href={`/products/${item.slug}`} className="hover:text-blue-600 transition-colors">
