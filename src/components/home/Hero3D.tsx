@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Float, useCursor, PerspectiveCamera } from '@react-three/drei';
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { MotionValue } from 'framer-motion';
 
@@ -23,6 +23,14 @@ function PCCabinet({
 
   // Use a ref for fan rotation so we can continuously spin them
   const fanRotationRef = useRef(0);
+
+  // Set initial position and scale to avoid reverse animations on mount
+  useEffect(() => {
+    if (groupRef.current) {
+      groupRef.current.position.y = -2;
+      groupRef.current.scale.set(0.95, 0.95, 0.95);
+    }
+  }, []);
 
   useFrame((state, delta) => {
     if (!groupRef.current) return;
@@ -106,8 +114,6 @@ function PCCabinet({
       ref={groupRef}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
-      scale={[0.95, 0.95, 0.95]}
-      position={[0, -2, 0]}
     >
       {/* Main Case Body (Matte White/Black contrast) */}
       <mesh position={[0, 0, 0]} castShadow receiveShadow>
