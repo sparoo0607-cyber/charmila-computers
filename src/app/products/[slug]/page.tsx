@@ -56,6 +56,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 src={images[0]} 
                 alt={product.name} 
                 fill 
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-contain p-8 mix-blend-darken" 
               />
             </div>
@@ -132,6 +133,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         src={recImages[0]} 
                         alt={rec.name} 
                         fill 
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-darken" 
                       />
                     </div>
