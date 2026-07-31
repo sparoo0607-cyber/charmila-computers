@@ -119,6 +119,88 @@ export async function createProduct(formData: FormData) {
   }
 }
 
+export async function editProduct(formData: FormData) {
+  try {
+    const id = formData.get('id') as string;
+    const name = formData.get('name') as string;
+    const description = formData.get('description') as string;
+    const price = parseFloat(formData.get('price') as string);
+    const stock = parseInt(formData.get('stock') as string);
+    const categoryId = formData.get('categoryId') as string;
+    const brandId = formData.get('brandId') as string;
+    const imageMode = formData.get('imageMode') as string;
+    const existingImage = formData.get('existingImage') as string;
+    
+    let finalImageUrl = existingImage;
+
+    if (imageMode === 'url') {
+      const url = formData.get('imageUrl') as string;
+      if (url) finalImageUrl = url;
+    } else {
+      const file = formData.get('imageFile') as File;
+      if (file && file.size > 0) {
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+        
+        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
+        const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+        
+        const fs = require('fs');
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        const filepath = path.join(uploadDir, filename);
+        await writeFile(filepath, buffer);
+        finalImageUrl = `/uploads/${filename}`;
+      }
+    }
+    
+    let type = formData.get('type') as string;
+    const customType = formData.get('customType') as string;
+    const customDescription = formData.get('customDescription') as string;
+    
+    if (type === 'Custom' && customType) {
+      type = customType;
+    }
+
+    const socket = formData.get('socket') as string;
+    const ddr = formData.get('ddr') as string;
+    const wattage = formData.get('wattage') as string;
+
+    const attributes: any = { type };
+    if (socket) attributes.socket = socket;
+    if (ddr) attributes.ddr = ddr;
+    if (wattage) attributes.wattage = wattage;
+    if (customDescription) attributes.customDescription = customDescription;
+
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+    await prisma.product.update({
+      where: { id },
+      data: {
+        name,
+        slug,
+        description,
+        price,
+        stock,
+        categoryId,
+        brandId,
+        images: JSON.stringify([finalImageUrl]),
+        attributes: JSON.stringify(attributes)
+      }
+    });
+
+    revalidatePath('/admin/products');
+    revalidatePath('/products');
+    revalidatePath('/build-pc');
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to edit product:", error);
+    return { success: false, error: "Failed to edit product" };
+  }
+}
+
 // --- Inquiry Management ---
 export async function getAdminInquiries() {
   return await prisma.inquiry.findMany({
