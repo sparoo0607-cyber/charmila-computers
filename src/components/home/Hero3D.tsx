@@ -115,33 +115,47 @@ function PCCabinet({
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
-      {/* Motherboard Tray (Solid Back Wall at -X) */}
+      {/* Motherboard Tray (Left Wall) */}
       <mesh position={[-1.6, 0, 0]} castShadow receiveShadow>
         <boxGeometry args={[0.1, 4.2, 2.6]} />
-        <meshStandardMaterial color="#FFFFFF" roughness={0.7} metalness={0.1} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.7} />
+      </mesh>
+      {/* Motherboard Tray Interior */}
+      <mesh position={[-1.54, 0, 0]} receiveShadow>
+        <boxGeometry args={[0.02, 4.18, 2.58]} />
+        <meshStandardMaterial color="#020617" roughness={0.9} />
       </mesh>
 
-      {/* Rear Panel (Solid Back Wall at -Z) */}
+      {/* Rear Panel (Back Wall) */}
       <mesh position={[0, 0, -1.3]} castShadow receiveShadow>
         <boxGeometry args={[3.2, 4.2, 0.1]} />
-        <meshStandardMaterial color="#FFFFFF" roughness={0.7} metalness={0.1} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.7} />
+      </mesh>
+      {/* Rear Panel Interior */}
+      <mesh position={[0, 0, -1.24]} receiveShadow>
+        <boxGeometry args={[3.18, 4.18, 0.02]} />
+        <meshStandardMaterial color="#020617" roughness={0.9} />
       </mesh>
 
       {/* Top Panel */}
       <mesh position={[0, 2.05, 0]} castShadow receiveShadow>
         <boxGeometry args={[3.2, 0.1, 2.6]} />
-        <meshStandardMaterial color="#FFFFFF" roughness={0.7} metalness={0.1} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.7} />
+      </mesh>
+      {/* Top Panel Interior */}
+      <mesh position={[0, 1.99, 0]} receiveShadow>
+        <boxGeometry args={[3.18, 0.02, 2.58]} />
+        <meshStandardMaterial color="#020617" roughness={0.9} />
       </mesh>
 
       {/* Bottom Panel */}
       <mesh position={[0, -2.05, 0]} castShadow receiveShadow>
         <boxGeometry args={[3.2, 0.1, 2.6]} />
-        <meshStandardMaterial color="#FFFFFF" roughness={0.7} metalness={0.1} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.7} />
       </mesh>
-
-      {/* Interior Dark Background on Motherboard Tray */}
-      <mesh position={[-1.54, 0, 0]} receiveShadow>
-        <boxGeometry args={[0.02, 3.9, 2.4]} />
+      {/* Bottom Panel Interior */}
+      <mesh position={[0, -1.99, 0]} receiveShadow>
+        <boxGeometry args={[3.18, 0.02, 2.58]} />
         <meshStandardMaterial color="#020617" roughness={0.9} />
       </mesh>
 
