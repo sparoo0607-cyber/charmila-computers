@@ -1,6 +1,6 @@
 'use client';
 
-import { Heart, Scale, Check } from 'lucide-react';
+import { Scale, Check } from 'lucide-react';
 import { useCompareStore, CompareProduct } from '@/store/useCompareStore';
 import { useState, useEffect } from 'react';
 
@@ -25,12 +25,6 @@ export function ProductCardActions({ product }: { product: CompareProduct }) {
 
   return (
     <div className="flex gap-2">
-      <button 
-        onClick={(e) => { e.preventDefault(); /* Wishlist logic here */ }}
-        className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-colors"
-      >
-        <Heart className="h-4 w-4" />
-      </button>
       <button 
         onClick={handleCompareClick}
         className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${

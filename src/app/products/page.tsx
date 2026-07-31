@@ -1,6 +1,6 @@
 import { getAllProducts } from '@/lib/actions/product.actions';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Heart, Scale } from 'lucide-react';
+import { Scale } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ProductFilters } from '@/components/products/ProductFilters';

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, Cpu, Monitor, HardDrive, Fan, Mouse, Briefcase, 
-  ShieldCheck, Truck, Headphones, RefreshCcw, Heart, ShoppingCart
+  ShieldCheck, Truck, Headphones, RefreshCcw
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -90,11 +90,6 @@ export default function Home() {
             <div key={product.id} className="group flex flex-col">
               <div className="h-64 w-full relative mb-6 bg-gray-50 rounded-2xl p-6 transition-colors group-hover:bg-gray-100">
                 <Image src={product.image} alt={product.name} fill className="object-contain p-6 mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col gap-2">
-                  <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-900 hover:text-red-500 shadow-sm transition-colors">
-                    <Heart className="h-5 w-5" />
-                  </button>
-                </div>
               </div>
               
               <div className="flex flex-col flex-1 px-2">

@@ -4,7 +4,7 @@ import { useCompareStore } from '@/store/useCompareStore';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, X, PlusCircle, Scale } from 'lucide-react';
+import { X, PlusCircle, Scale } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { CompareSearchModal } from '@/components/compare/CompareSearchModal';
 import { WhatsAppBuyButton } from '@/components/products/WhatsAppBuyButton';
@@ -99,9 +99,7 @@ export default function ComparePage() {
                     </Link>
                     <div className="text-2xl font-black text-gray-900 mb-4">₹{(item.price || 0).toLocaleString('en-IN')}</div>
                     <div className="flex flex-col gap-2">
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                        <ShoppingCart className="h-4 w-4 mr-2" /> Add to Cart
-                      </Button>
+
                       <WhatsAppBuyButton 
                         productName={item.name} 
                         price={item.price}

@@ -1,6 +1,6 @@
 import { getProductBySlug, getAllProducts } from '@/lib/actions/product.actions';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Heart, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
+import { ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -106,9 +106,6 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
             {/* Actions */}
             <div className="mt-auto flex gap-4 pt-8 border-t border-gray-100">
-              <Button size="lg" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-14 text-lg font-bold shadow-lg shadow-blue-600/20">
-                <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
-              </Button>
               <WhatsAppBuyButton 
                 productName={product.name} 
                 price={product.price}
@@ -116,9 +113,6 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl h-14 text-lg font-bold shadow-lg shadow-green-600/20"
               />
               <CompareButton product={compareProduct} />
-              <Button size="lg" variant="outline" className="w-14 h-14 rounded-xl border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 p-0 flex-shrink-0">
-                <Heart className="h-6 w-6" />
-              </Button>
             </div>
 
           </div>

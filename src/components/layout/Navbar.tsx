@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, ShoppingCart, Heart, Headphones, Truck, Scale, Menu, Cpu, Monitor, HardDrive, Fan, Mouse, Wifi, Briefcase, Tag, Zap, X, User } from 'lucide-react';
+import { Search, Headphones, Truck, Scale, Menu, Cpu, Monitor, HardDrive, Fan, Mouse, Wifi, Briefcase, Tag, Zap, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { GlobalSearch } from './GlobalSearch';
 import { CompareBadge } from './CompareBadge';
@@ -44,19 +44,6 @@ export function Navbar() {
             <span className="text-[10px] font-medium">Compare</span>
             <CompareBadge />
           </Link>
-          <Link href="/wishlist" className="flex flex-col items-center gap-1 text-gray-500 hover:text-[#2563EB] transition-colors group relative">
-            <Heart className="h-5 w-5 group-hover:-translate-y-0.5 transition-transform" />
-            <span className="text-[10px] font-medium">Wishlist</span>
-          </Link>
-          <Link href="/cart" className="flex flex-col items-center gap-1 text-gray-500 hover:text-[#2563EB] transition-colors group relative">
-            <div className="relative">
-              <ShoppingCart className="h-5 w-5 group-hover:-translate-y-0.5 transition-transform" />
-              <span className="absolute -top-2 -right-2 bg-[#2563EB] text-white text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white">
-                0
-              </span>
-            </div>
-            <span className="text-[10px] font-medium">Cart</span>
-          </Link>
 
           {/* User / Sign In */}
           <div className="w-px h-8 bg-gray-200 mx-2"></div>
@@ -84,12 +71,6 @@ export function Navbar() {
               <User className="h-6 w-6" />
             </Link>
           )}
-          <Link href="/cart" className="relative text-gray-500 hover:text-blue-600">
-            <ShoppingCart className="h-6 w-6" />
-            <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white">
-              0
-            </span>
-          </Link>
         </div>
       </div>
 
