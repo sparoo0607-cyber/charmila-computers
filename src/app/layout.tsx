@@ -28,6 +28,9 @@ export const metadata: Metadata = {
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { StoreLayout } from "@/components/layout/StoreLayout";
 
+import { GlobalBackground } from "@/components/layout/GlobalBackground";
+import { CustomCursor } from "@/components/layout/CustomCursor";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,7 +41,9 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${sora.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-[#2563EB] selection:text-white">
+        <GlobalBackground />
+        <CustomCursor />
         <AuthProvider>
           <StoreLayout>
             {children}

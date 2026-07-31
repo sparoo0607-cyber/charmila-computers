@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { GlobalSearch } from './GlobalSearch';
 import { CompareBadge } from './CompareBadge';
 import { NavMenu } from './NavMenu';
+import { MegaMenu } from './MegaMenu';
 import { Suspense } from 'react';
 import { useSession } from 'next-auth/react';
 import { useScrolled } from '@/lib/hooks/useScrolled';
@@ -93,11 +94,8 @@ export function Navbar() {
 
         {/* Category Nav Row — Desktop only */}
         <div className="hidden lg:block border-t border-[#1E2D45]/50 bg-[#080C14]/40">
-          <div className="container mx-auto px-4 h-12 flex items-center gap-6">
-            <button className="bg-[#1A2236] hover:bg-[#2563EB]/20 border border-[#1E2D45] hover:border-[#2563EB]/50 text-white px-5 h-8 rounded-full flex items-center gap-2 font-black text-[10px] uppercase tracking-widest transition-all duration-300">
-              <Menu className="h-3.5 w-3.5 text-[#00D4FF]" />
-              Categories
-            </button>
+          <div className="container mx-auto px-4 h-12 flex items-center gap-6 relative">
+            <MegaMenu />
 
             <Suspense fallback={<div className="h-4 w-20 bg-[#1A2236] rounded animate-pulse" />}>
               <NavMenu />
