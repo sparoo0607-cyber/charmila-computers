@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { WhatsAppBuyButton } from '@/components/products/WhatsAppBuyButton';
 import { CompareButton } from '@/components/products/CompareButton';
+import { ProductGridCard } from '@/components/products/ProductGridCard';
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -144,28 +145,25 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <h2 className="text-xs font-black uppercase tracking-[0.4em] text-[#00D4FF] px-4">You Might Also Like</h2>
               <div className="h-px flex-1 bg-[#1E2D45]" />
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {recommendations.map(rec => {
-                const recImages = JSON.parse(rec.images);
+                const recImages = JSON.parse(rec.images || '[]');
+                const compareRec = {
+                  id: rec.id,
+                  name: rec.name,
+                  slug: rec.slug,
+                  price: rec.price,
+                  image: recImages[0] || '/images/placeholder.png',
+                  category: { name: rec.category.name, slug: rec.category.slug },
+                  brand: { name: rec.brand?.name || 'Unknown' },
+                  attributes: rec.attributes || '{}',
+                };
                 return (
-                  <Link
-                    href={`/products/${rec.slug}`}
-                    key={rec.id}
-                    className="group rounded-2xl border border-[#1E2D45] bg-[#0F1624] p-4 flex flex-col transition-all hover:-translate-y-1 hover:border-[#2563EB]/50 hover:shadow-[0_8px_24px_rgba(37,99,235,0.15)]"
-                  >
-                    <div className="relative h-36 w-full mb-3 rounded-xl overflow-hidden bg-[#080C14]">
-                      <Image
-                        src={recImages[0]}
-                        alt={rec.name}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 25vw"
-                        className="object-contain p-2 group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    <p className="text-[9px] font-black text-[#2563EB] tracking-[0.2em] uppercase mb-1">{rec.brand?.name}</p>
-                    <h3 className="text-xs font-semibold text-[#94A3B8] mb-2 line-clamp-2 group-hover:text-white transition-colors leading-snug">{rec.name}</h3>
-                    <span className="text-base font-black text-white mt-auto">₹{rec.price.toLocaleString('en-IN')}</span>
-                  </Link>
+                  <ProductGridCard 
+                    key={rec.id} 
+                    product={rec} 
+                    compareProduct={compareRec} 
+                  />
                 );
               })}
             </div>

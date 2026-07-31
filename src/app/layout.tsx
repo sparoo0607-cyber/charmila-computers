@@ -28,6 +28,7 @@ export const metadata: Metadata = {
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { StoreLayout } from "@/components/layout/StoreLayout";
 import { GlobalBackground } from "@/components/layout/GlobalBackground";
+import NextTopLoader from 'nextjs-toploader';
 
 export default function RootLayout({
   children,
@@ -40,6 +41,17 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} ${sora.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-[#2563EB] selection:text-white">
+        <NextTopLoader
+          color="#00D4FF"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #2563EB,0 0 5px #00D4FF"
+        />
         <GlobalBackground />
         <AuthProvider>
           <StoreLayout>

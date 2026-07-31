@@ -27,9 +27,12 @@ export function ProductGridCard({ product, compareProduct }: ProductGridCardProp
 
   return (
     <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       onMouseMove={handleMouseMove}
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      whileHover={{ y: -8, scale: 1.02, transition: { type: "spring", stiffness: 400, damping: 30 } }}
       className="group relative rounded-[24px] border border-[#1E2D45] bg-[#0A0F1A]/80 backdrop-blur-md p-5 flex flex-col h-full overflow-hidden shadow-[0_0_0_rgba(0,0,0,0)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.15)] hover:border-[#2563EB]/50 z-10"
     >
       {/* Dynamic Spotlight */}
