@@ -47,10 +47,9 @@ export async function createProduct(formData: FormData) {
     const categoryId = formData.get('categoryId') as string;
     let brandId = formData.get('brandId') as string;
     const imageMode = formData.get('imageMode') as string;
+    const customBrandName = formData.get('customBrandName') as string;
 
-    if (brandId === 'custom_create_new') {
-      const customBrandName = formData.get('customBrandName') as string;
-      if (!customBrandName) throw new Error("Custom brand name is required");
+    if (customBrandName) {
       const customSlug = customBrandName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       
       const newBrand = await prisma.brand.upsert({
@@ -143,10 +142,9 @@ export async function editProduct(formData: FormData) {
     let brandId = formData.get('brandId') as string;
     const imageMode = formData.get('imageMode') as string;
     const existingImage = formData.get('existingImage') as string;
+    const customBrandName = formData.get('customBrandName') as string;
     
-    if (brandId === 'custom_create_new') {
-      const customBrandName = formData.get('customBrandName') as string;
-      if (!customBrandName) throw new Error("Custom brand name is required");
+    if (customBrandName) {
       const customSlug = customBrandName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       
       const newBrand = await prisma.brand.upsert({

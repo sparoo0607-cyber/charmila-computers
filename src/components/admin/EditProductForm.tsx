@@ -26,6 +26,10 @@ export function EditProductForm({ product, categories, brands }: { product: any,
 
   const [componentType, setComponentType] = useState(initialType);
   const [imageMode, setImageMode] = useState<'upload' | 'url'>(initialImage.startsWith('http') ? 'url' : 'upload');
+  
+  const [selectedBrandId, setSelectedBrandId] = useState(product.brandId || (brands.length > 0 ? brands[0].id : ''));
+  const selectedBrandSlug = brands.find(b => b.id === selectedBrandId)?.slug;
+  const showCustomBrandInput = selectedBrandId === 'custom_create_new' || selectedBrandSlug === 'custom';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -78,26 +82,19 @@ export function EditProductForm({ product, categories, brands }: { product: any,
         </div>
         <div className="space-y-2">
           <label className="text-sm font-bold text-gray-700">Brand</label>
-          <select required name="brandId" defaultValue={product.brandId} className="w-full border-gray-300 rounded-xl p-3 border bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none" onChange={(e) => {
-            const el = document.getElementById('customBrandContainer');
-            if (e.target.value === 'custom_create_new') {
-              el?.classList.remove('hidden');
-              document.getElementById('customBrandName')?.setAttribute('required', 'true');
-            } else {
-              el?.classList.add('hidden');
-              document.getElementById('customBrandName')?.removeAttribute('required');
-            }
-          }}>
+          <select required name="brandId" value={selectedBrandId} onChange={(e) => setSelectedBrandId(e.target.value)} className="w-full border-gray-300 rounded-xl p-3 border bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
             {brands.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
             <option value="custom_create_new">+ Add New Brand...</option>
           </select>
         </div>
       </div>
 
-      <div id="customBrandContainer" className="hidden space-y-2 bg-blue-50 p-4 rounded-xl border border-blue-100">
-        <label className="text-sm font-bold text-blue-900">New Brand Name</label>
-        <input id="customBrandName" name="customBrandName" type="text" className="w-full border-blue-200 rounded-xl p-3 border focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="e.g. Gigabyte" />
-      </div>
+      {showCustomBrandInput && (
+        <div className="space-y-2 bg-blue-50 p-4 rounded-xl border border-blue-100">
+          <label className="text-sm font-bold text-blue-900">New Brand Name</label>
+          <input required name="customBrandName" type="text" className="w-full border-blue-200 rounded-xl p-3 border focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="e.g. Gigabyte" />
+        </div>
+      )}
 
       <div className="space-y-4">
         <label className="text-sm font-bold text-gray-700">Product Image</label>
