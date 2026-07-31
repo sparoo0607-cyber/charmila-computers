@@ -43,10 +43,10 @@ export function NavMenu() {
   }, [pathname, searchParams]);
 
   return (
-    <nav ref={navRef} className="flex-1 flex items-center gap-1 text-sm font-semibold relative">
+    <nav ref={navRef} className="flex-1 flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider relative h-full">
       {/* The Magic Bubble */}
       <div 
-        className="absolute top-1/2 -translate-y-1/2 h-8 bg-blue-50 rounded-full transition-all duration-300 ease-out z-0"
+        className="absolute top-1/2 -translate-y-1/2 h-8 bg-[#2563EB]/10 border border-[#2563EB]/30 shadow-[0_0_15px_rgba(37,99,235,0.2)] rounded-full transition-all duration-300 ease-out z-0 pointer-events-none"
         style={{
           left: `${bubbleStyle.left}px`,
           width: `${bubbleStyle.width}px`,
@@ -61,8 +61,8 @@ export function NavMenu() {
             key={link.name} 
             href={link.href}
             ref={(el) => { linkRefs.current[idx] = el }}
-            className={`relative z-10 px-3 py-1.5 transition-colors ${
-              isActive ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'
+            className={`relative z-10 px-4 py-1.5 transition-colors duration-200 ${
+              isActive ? 'text-[#00D4FF] drop-shadow-[0_0_8px_rgba(0,212,255,0.5)]' : 'text-[#64748B] hover:text-white'
             }`}
           >
             {link.name}
