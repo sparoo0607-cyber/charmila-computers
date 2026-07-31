@@ -36,6 +36,8 @@ const PRODUCTS = [
     image: 'https://images.unsplash.com/photo-1541029071515-84cc54f84cb5?auto=format&fit=crop&q=80&w=400', 
     rating: 4.8, reviews: 214 
   },
+];
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[#FAFBFD] font-sans">
