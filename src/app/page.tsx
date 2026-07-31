@@ -61,6 +61,37 @@ export default function Home() {
       {/* ── 3. CATEGORY PEDESTALS ────────────────────────── */}
       <CategoryPedestals />
 
+      {/* ── 3.5. LONG PICTURE BANNER ─────────────────────── */}
+      <section className="py-8 relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="relative w-full h-24 md:h-32 lg:h-40 rounded-2xl overflow-hidden group shadow-[0_0_30px_rgba(37,99,235,0.15)] border border-[#1E2D45] hover:border-[#00D4FF]/50 transition-all duration-700">
+            {/* The 1:10 ratio image */}
+            <Image 
+              src="/images/banners/long_banner_bg.png" 
+              alt="Charmila Computers Gaming Setup" 
+              fill 
+              className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-1000 ease-out" 
+            />
+            {/* Edge fades to blend nicely */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080C14] via-transparent to-[#080C14] opacity-80" />
+            
+            {/* Central glowing text */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-white/90 drop-shadow-[0_10px_20px_rgba(0,0,0,1)] z-10">
+                Charmila Computers
+              </h2>
+              {/* Extra neon glow layer behind text */}
+              <h2 className="absolute text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] via-[#00D4FF] to-[#A78BFA] opacity-60 blur-sm mix-blend-screen z-0 group-hover:opacity-100 group-hover:blur-md transition-all duration-700">
+                Charmila Computers
+              </h2>
+            </div>
+            
+            {/* Top scanning highlight line */}
+            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#00D4FF]/70 to-transparent group-hover:via-white transition-all duration-700" />
+          </div>
+        </div>
+      </section>
+
       {/* ── 4. DUAL MINI BANNERS ─────────────────────────── */}
       <section className="py-10 relative overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
@@ -68,44 +99,44 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
             {/* Banner A — CPU Upgrade */}
-            <Link href="/products?category=processors" className="group relative rounded-2xl overflow-hidden flex items-center gap-6 p-6 md:p-8 min-h-[160px] border border-[#1E2D45] hover:border-[#2563EB]/60 transition-all duration-300 hover:shadow-[0_0_30px_rgba(37,99,235,0.2)]">
+            <Link href="/products?category=processors" className="group relative rounded-2xl overflow-hidden flex items-center gap-6 p-6 md:p-8 min-h-[160px] border border-[#1E2D45] hover:border-[#2563EB]/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:-translate-y-1">
               {/* Background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628] via-[#0F1E38] to-[#0A1628]" />
-              <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#2563EB]/10 to-transparent" />
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#2563EB]/80 to-transparent" />
+              <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#2563EB]/15 to-transparent group-hover:from-[#2563EB]/30 transition-all duration-500" />
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#2563EB]/80 to-transparent group-hover:via-[#00D4FF] transition-all duration-500" />
               {/* Animated glow dot */}
-              <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#2563EB] shadow-[0_0_8px_rgba(37,99,235,0.8)] animate-pulse" />
+              <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#00D4FF] shadow-[0_0_12px_rgba(0,212,255,0.9)] animate-pulse" />
 
               <div className="relative z-10 flex-1">
-                <span className="block text-[9px] font-black uppercase tracking-[0.4em] text-[#2563EB] mb-1">Hot Category</span>
-                <h3 className="text-xl md:text-2xl font-black text-white uppercase leading-tight mb-2">Upgrade Your<br/>CPU Today</h3>
-                <p className="text-xs text-[#475569] mb-4">Intel & AMD latest gen processors. Build faster, render faster.</p>
+                <span className="block text-[9px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-1 group-hover:text-white transition-colors">Hot Category</span>
+                <h3 className="text-xl md:text-2xl font-black text-white uppercase leading-tight mb-2 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all">Upgrade Your<br/>CPU Today</h3>
+                <p className="text-xs text-[#64748B] mb-4 group-hover:text-[#94A3B8] transition-colors">Intel & AMD latest gen processors. Build faster, render faster.</p>
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00D4FF] group-hover:gap-3 transition-all">
                   Shop Processors <ArrowRight className="h-3.5 w-3.5" />
                 </span>
               </div>
-              <div className="relative z-10 w-28 h-28 flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
-                <Image src="/images/products/intel_cpu_isolated_1785504512463.png" alt="CPU" fill className="object-contain drop-shadow-[0_0_20px_rgba(37,99,235,0.5)]" />
+              <div className="relative z-10 w-28 h-28 flex-shrink-0 group-hover:scale-125 transition-transform duration-700 ease-out">
+                <Image src="/images/products/intel_cpu_isolated_1785504512463.png" alt="CPU" fill className="object-contain drop-shadow-[0_0_20px_rgba(37,99,235,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(37,99,235,0.8)] transition-all" />
               </div>
             </Link>
 
             {/* Banner B — GPU Deals */}
-            <Link href="/products?category=graphics-cards" className="group relative rounded-2xl overflow-hidden flex items-center gap-6 p-6 md:p-8 min-h-[160px] border border-[#1E2D45] hover:border-[#A78BFA]/60 transition-all duration-300 hover:shadow-[0_0_30px_rgba(167,139,250,0.2)]">
+            <Link href="/products?category=graphics-cards" className="group relative rounded-2xl overflow-hidden flex items-center gap-6 p-6 md:p-8 min-h-[160px] border border-[#1E2D45] hover:border-[#A78BFA]/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(167,139,250,0.3)] hover:-translate-y-1">
               <div className="absolute inset-0 bg-gradient-to-r from-[#130A28] via-[#1A0F35] to-[#130A28]" />
-              <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#A78BFA]/10 to-transparent" />
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#A78BFA]/80 to-transparent" />
-              <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#A78BFA] shadow-[0_0_8px_rgba(167,139,250,0.8)] animate-pulse" />
+              <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#A78BFA]/15 to-transparent group-hover:from-[#A78BFA]/30 transition-all duration-500" />
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#A78BFA]/80 to-transparent group-hover:via-white transition-all duration-500" />
+              <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#A78BFA] shadow-[0_0_12px_rgba(167,139,250,0.9)] animate-pulse" />
 
               <div className="relative z-10 flex-1">
-                <span className="block text-[9px] font-black uppercase tracking-[0.4em] text-[#A78BFA] mb-1">Best Seller</span>
-                <h3 className="text-xl md:text-2xl font-black text-white uppercase leading-tight mb-2">RTX 4000 Series<br/>GPUs In Stock</h3>
-                <p className="text-xs text-[#475569] mb-4">NVIDIA RTX 4070, 4080, 4090 — all variants available.</p>
+                <span className="block text-[9px] font-black uppercase tracking-[0.4em] text-[#A78BFA] mb-1 group-hover:text-white transition-colors">Best Seller</span>
+                <h3 className="text-xl md:text-2xl font-black text-white uppercase leading-tight mb-2 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all">RTX 4000 Series<br/>GPUs In Stock</h3>
+                <p className="text-xs text-[#64748B] mb-4 group-hover:text-[#94A3B8] transition-colors">NVIDIA RTX 4070, 4080, 4090 — all variants available.</p>
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#A78BFA] group-hover:gap-3 transition-all">
                   View GPUs <ArrowRight className="h-3.5 w-3.5" />
                 </span>
               </div>
-              <div className="relative z-10 w-28 h-28 flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
-                <Image src="/images/products/rtx_4090_isolated_1785504487639.png" alt="GPU" fill className="object-contain drop-shadow-[0_0_20px_rgba(167,139,250,0.5)]" />
+              <div className="relative z-10 w-28 h-28 flex-shrink-0 group-hover:scale-125 transition-transform duration-700 ease-out">
+                <Image src="/images/products/rtx_4090_isolated_1785504487639.png" alt="GPU" fill className="object-contain drop-shadow-[0_0_20px_rgba(167,139,250,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(167,139,250,0.8)] transition-all" />
               </div>
             </Link>
           </div>
