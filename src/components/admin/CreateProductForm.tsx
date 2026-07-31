@@ -11,6 +11,7 @@ export function CreateProductForm({ categories, brands }: { categories: any[], b
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [componentType, setComponentType] = useState('CPU');
   const [imageMode, setImageMode] = useState<'upload' | 'url'>('upload');
+  const [imageUrl, setImageUrl] = useState('');
   const [selectedBrandId, setSelectedBrandId] = useState(brands.length > 0 ? brands[0].id : '');
   const selectedBrandSlug = brands.find(b => b.id === selectedBrandId)?.slug;
   const showCustomBrandInput = selectedBrandId === 'custom_create_new' || selectedBrandSlug === 'custom';
@@ -112,13 +113,30 @@ export function CreateProductForm({ categories, brands }: { categories: any[], b
             </div>
           </div>
         ) : (
-          <input 
-            required={imageMode === 'url'} 
-            name="imageUrl" 
-            type="url" 
-            className="w-full border-gray-300 rounded-xl p-3 border focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-            placeholder="https://images.unsplash.com/..." 
-          />
+          <div className="space-y-4">
+            <input 
+              required={imageMode === 'url'} 
+              name="imageUrl" 
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              type="url" 
+              className="w-full border-gray-300 rounded-xl p-3 border focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+              placeholder="https://images.unsplash.com/..." 
+            />
+            {imageUrl && (
+              <div className="p-4 bg-gray-50 border rounded-xl flex items-center gap-4">
+                <span className="text-sm font-bold text-gray-500">Preview:</span>
+                <img 
+                  src={imageUrl} 
+                  alt="Preview" 
+                  className="h-24 w-24 object-cover rounded-lg border shadow-sm"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=Invalid+Image';
+                  }}
+                />
+              </div>
+            )}
+          </div>
         )}
       </div>
 

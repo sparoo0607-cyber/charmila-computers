@@ -26,7 +26,7 @@ export function EditProductForm({ product, categories, brands }: { product: any,
 
   const [componentType, setComponentType] = useState(initialType);
   const [imageMode, setImageMode] = useState<'upload' | 'url'>(initialImage.startsWith('http') ? 'url' : 'upload');
-  
+  const [imageUrl, setImageUrl] = useState(initialImage.startsWith('http') ? initialImage : '');
   const [selectedBrandId, setSelectedBrandId] = useState(product.brandId || (brands.length > 0 ? brands[0].id : ''));
   const selectedBrandSlug = brands.find(b => b.id === selectedBrandId)?.slug;
   const showCustomBrandInput = selectedBrandId === 'custom_create_new' || selectedBrandSlug === 'custom';
@@ -38,7 +38,6 @@ export function EditProductForm({ product, categories, brands }: { product: any,
     const formData = new FormData(e.currentTarget);
     formData.append('id', product.id);
     formData.append('imageMode', imageMode);
-    // keep original image if they didn't upload a new one
     formData.append('existingImage', initialImage);
 
     const res = await editProduct(formData);
@@ -130,18 +129,34 @@ export function EditProductForm({ product, categories, brands }: { product: any,
             </div>
           </div>
         ) : (
-          <input 
-            name="imageUrl" 
-            defaultValue={imageMode === 'url' ? initialImage : ''}
-            type="url" 
-            className="w-full border-gray-300 rounded-xl p-3 border focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-            placeholder="https://images.unsplash.com/..." 
-          />
+          <div className="space-y-4">
+            <input 
+              name="imageUrl" 
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              type="url" 
+              className="w-full border-gray-300 rounded-xl p-3 border focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+              placeholder="https://images.unsplash.com/..." 
+            />
+            {imageUrl && (
+              <div className="p-4 bg-gray-50 border rounded-xl flex items-center gap-4">
+                <span className="text-sm font-bold text-gray-500">Preview:</span>
+                <img 
+                  src={imageUrl} 
+                  alt="Preview" 
+                  className="h-24 w-24 object-cover rounded-lg border shadow-sm"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=Invalid+Image';
+                  }}
+                />
+              </div>
+            )}
+          </div>
         )}
-        {initialImage && (
+        {initialImage && imageMode === 'upload' && (
           <div className="mt-2 flex items-center gap-4">
             <span className="text-sm text-gray-500">Current Image:</span>
-            <img src={initialImage} alt="Current" className="h-16 w-16 object-cover rounded-lg border" />
+            <img src={initialImage} alt="Current" className="h-16 w-16 object-cover rounded-lg border shadow-sm" />
           </div>
         )}
       </div>
