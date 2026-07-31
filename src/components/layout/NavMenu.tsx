@@ -14,7 +14,6 @@ const NAV_LINKS = [
   { name: 'Power Supplies', href: '/products?category=power-supplies', matchFn: (p: string, s: URLSearchParams) => s.get('category') === 'power-supplies' },
   { name: 'Gears', href: '/products?category=peripherals', matchFn: (p: string, s: URLSearchParams) => s.get('category') === 'peripherals' },
   { name: 'Laptops', href: '/products?category=laptops', matchFn: (p: string, s: URLSearchParams) => s.get('category') === 'laptops' },
-  { name: 'Deals', href: '/deals', matchFn: (p: string, s: URLSearchParams) => p === '/deals' },
 ];
 
 export function NavMenu() {
@@ -64,7 +63,7 @@ export function NavMenu() {
             ref={(el) => { linkRefs.current[idx] = el }}
             className={`relative z-10 px-3 py-1.5 transition-colors ${
               isActive ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'
-            } ${link.name === 'Deals' && !isActive ? '!text-red-500 hover:!text-red-600' : ''}`}
+            }`}
           >
             {link.name}
           </Link>
