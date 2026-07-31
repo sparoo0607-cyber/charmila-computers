@@ -70,9 +70,19 @@ export async function createProduct(formData: FormData) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         
-        // Vercel has a read-only filesystem, so we convert uploaded images to Base64 data URIs!
-        const base64 = buffer.toString('base64');
-        finalImageUrl = `data:${file.type};base64,${base64}`;
+        const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.\-_]/g, '')}`;
+        const { data, error } = await supabase.storage.from('products').upload(fileName, buffer, {
+          contentType: file.type,
+          upsert: true
+        });
+
+        if (error) {
+          console.error("Supabase upload error:", error);
+          throw new Error("Image upload failed");
+        }
+
+        const { data: urlData } = supabase.storage.from('products').getPublicUrl(fileName);
+        finalImageUrl = urlData.publicUrl;
       }
     }
     
@@ -121,6 +131,8 @@ export async function createProduct(formData: FormData) {
   }
 }
 
+import { supabase } from '../supabase';
+
 export async function editProduct(formData: FormData) {
   try {
     const id = formData.get('id') as string;
@@ -156,9 +168,19 @@ export async function editProduct(formData: FormData) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         
-        // Vercel has a read-only filesystem, so we convert uploaded images to Base64 data URIs!
-        const base64 = buffer.toString('base64');
-        finalImageUrl = `data:${file.type};base64,${base64}`;
+        const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.\-_]/g, '')}`;
+        const { data, error } = await supabase.storage.from('products').upload(fileName, buffer, {
+          contentType: file.type,
+          upsert: true
+        });
+
+        if (error) {
+          console.error("Supabase upload error:", error);
+          throw new Error("Image upload failed");
+        }
+
+        const { data: urlData } = supabase.storage.from('products').getPublicUrl(fileName);
+        finalImageUrl = urlData.publicUrl;
       }
     }
     

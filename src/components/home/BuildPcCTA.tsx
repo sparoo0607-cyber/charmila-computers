@@ -34,7 +34,7 @@ export function BuildPcCTA() {
               viewport={{ once: true }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0F1624] border border-[#1E2D45] mb-6"
             >
-              <Zap className="w-3 h-3 text-[#00D4FF]" />
+              <div className="relative w-4 h-4"><Image src="/images/icons/zap_icon_1785528634168.png" alt="Zap" fill className="object-contain" /></div>
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#94A3B8]">Expert PC Building</span>
             </motion.div>
             
@@ -68,13 +68,13 @@ export function BuildPcCTA() {
             >
               <Link href="/build-pc" className="flex-1 sm:flex-none">
                 <Button className="w-full relative h-14 px-8 rounded-xl bg-white text-black hover:bg-[#E8EAF0] font-black uppercase tracking-widest transition-transform hover:scale-105 active:scale-95 group">
-                  <Hammer className="mr-2 h-4 w-4" /> Start Build
+                  <div className="relative w-5 h-5 mr-2"><Image src="/images/icons/hammer_icon_1785528723496.png" alt="Build" fill className="object-contain" /></div> Start Build
                   <ArrowRight className="ml-2 h-4 w-4 opacity-50 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <a href="https://wa.me/919010177427" target="_blank" rel="noreferrer" className="flex-1 sm:flex-none">
                 <Button variant="outline" className="w-full relative h-14 px-8 rounded-xl bg-transparent border-[#1E2D45] text-white hover:bg-[#1A2236] hover:border-[#2563EB]/50 font-bold uppercase tracking-widest transition-transform hover:scale-105 active:scale-95">
-                  <MessageCircle className="mr-2 h-4 w-4 text-[#25D366]" /> Expert Help
+                  <div className="relative w-5 h-5 mr-2"><Image src="/images/icons/chat_icon_1785528796689.png" alt="Chat" fill className="object-contain" /></div> Expert Help
                 </Button>
               </a>
             </motion.div>

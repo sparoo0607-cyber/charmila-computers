@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, Mail, MapPin, MessageCircle, Camera, ExternalLink, Zap, ChevronRight, Send, Gamepad2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -69,8 +70,8 @@ export function Footer() {
           {/* Brand & Social Column */}
           <div className="md:col-span-4 space-y-6">
             <Link href="/" className="flex items-center gap-3 group w-fit">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#00D4FF] shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-                <Zap className="h-6 w-6 text-white" />
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#00D4FF] shadow-[0_0_20px_rgba(37,99,235,0.4)] relative">
+                <div className="relative w-8 h-8"><Image src="/images/icons/zap_icon_1785528634168.png" alt="Logo" fill className="object-contain" /></div>
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-black text-white uppercase tracking-[0.2em] leading-none">Charmila</span>
@@ -83,14 +84,14 @@ export function Footer() {
 
             {/* Premium Social Cards */}
             <div className="flex gap-4 pt-4">
-              <a href="https://wa.me/919010177427" className="group flex items-center justify-center w-12 h-12 rounded-2xl bg-[#0F1624] border border-[#1E2D45] hover:border-[#25D366] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(37,211,102,0.2)]">
-                <MessageCircle className="h-5 w-5 text-[#475569] group-hover:text-[#25D366] transition-colors" />
+              <a href="https://wa.me/919010177427" className="group flex items-center justify-center w-12 h-12 rounded-2xl bg-[#0F1624] border border-[#1E2D45] hover:border-[#25D366] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(37,211,102,0.2)] relative">
+                <div className="relative w-6 h-6"><Image src="/images/icons/chat_icon_1785528796689.png" alt="WhatsApp" fill className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300" /></div>
               </a>
-              <a href="#" className="group flex items-center justify-center w-12 h-12 rounded-2xl bg-[#0F1624] border border-[#1E2D45] hover:border-[#5865F2] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(88,101,242,0.2)]">
-                <Gamepad2 className="h-5 w-5 text-[#475569] group-hover:text-[#5865F2] transition-colors" />
+              <a href="#" className="group flex items-center justify-center w-12 h-12 rounded-2xl bg-[#0F1624] border border-[#1E2D45] hover:border-[#5865F2] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(88,101,242,0.2)] relative">
+                <div className="relative w-6 h-6"><Image src="/images/icons/gamepad_icon_1785528831391.png" alt="Discord" fill className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300" /></div>
               </a>
-              <a href="#" className="group flex items-center justify-center w-12 h-12 rounded-2xl bg-[#0F1624] border border-[#1E2D45] hover:border-[#E1306C] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(225,48,108,0.2)]">
-                <Camera className="h-5 w-5 text-[#475569] group-hover:text-[#E1306C] transition-colors" />
+              <a href="#" className="group flex items-center justify-center w-12 h-12 rounded-2xl bg-[#0F1624] border border-[#1E2D45] hover:border-[#E1306C] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(225,48,108,0.2)] relative">
+                <div className="relative w-6 h-6"><Image src="/images/icons/camera_icon_1785528871316.png" alt="Instagram" fill className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300" /></div>
               </a>
             </div>
           </div>
@@ -152,8 +153,8 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-[#1E2D45]/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs font-medium text-[#475569] uppercase tracking-wider">
+        <div className="pt-8 border-t border-[#1E2D45]/50 flex flex-col md:flex-row justify-between items-center gap-4 pb-24 md:pb-0">
+          <p className="text-xs font-medium text-[#475569] uppercase tracking-wider text-center md:text-left">
             © {new Date().getFullYear()} Charmila Computers. Built for gamers.
           </p>
           <div className="flex gap-6 text-xs font-bold text-[#64748B] uppercase tracking-wider">

@@ -28,67 +28,73 @@ export function Navbar() {
         }`}
       >
         {/* Main Header Row */}
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between gap-8">
-          
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
-            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#00D4FF] shadow-[0_0_20px_rgba(37,99,235,0.5)] group-hover:shadow-[0_0_30px_rgba(0,212,255,0.8)] transition-all duration-300 group-hover:scale-105">
-              <Zap className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[15px] font-black text-white uppercase tracking-[0.15em] leading-tight group-hover:text-[#00D4FF] transition-colors">Charmila</span>
-              <span className="text-[9px] text-[#94A3B8] font-bold tracking-[0.3em] uppercase">Computers</span>
-            </div>
-          </Link>
+        <div className="container mx-auto px-4 pt-4 pb-2 lg:py-4 flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-8">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#00D4FF] shadow-[0_0_20px_rgba(37,99,235,0.5)] group-hover:shadow-[0_0_30px_rgba(0,212,255,0.8)] transition-all duration-300 group-hover:scale-105">
+                <Zap className="h-5 w-5 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[15px] font-black text-white uppercase tracking-[0.15em] leading-tight group-hover:text-[#00D4FF] transition-colors">Charmila</span>
+                <span className="text-[9px] text-[#94A3B8] font-bold tracking-[0.3em] uppercase">Computers</span>
+              </div>
+            </Link>
 
-          {/* Search Bar — Desktop */}
-          <div className="flex-1 max-w-2xl hidden lg:flex items-center">
+            {/* Search Bar — Desktop */}
+            <div className="flex-1 max-w-2xl hidden lg:flex items-center">
+              <GlobalSearch />
+            </div>
+
+            {/* Action Icons — Desktop */}
+            <div className="hidden md:flex items-center gap-6">
+              <Link href="/support" className="flex flex-col items-center gap-1 text-[#64748B] hover:text-[#00D4FF] transition-colors group">
+                <div className="p-2 rounded-lg group-hover:bg-[#2563EB]/10 transition-colors">
+                  <Headphones className="h-5 w-5" />
+                </div>
+                <span className="text-[9px] font-bold uppercase tracking-widest">Support</span>
+              </Link>
+              
+              <Link href="/compare" className="flex flex-col items-center gap-1 text-[#64748B] hover:text-[#00D4FF] transition-colors group relative">
+                <div className="p-2 rounded-lg group-hover:bg-[#2563EB]/10 transition-colors">
+                  <Scale className="h-5 w-5" />
+                  <CompareBadge />
+                </div>
+                <span className="text-[9px] font-bold uppercase tracking-widest">Compare</span>
+              </Link>
+              
+              <div className="w-px h-8 bg-[#1E2D45]" />
+              
+              {session ? (
+                <Link href="/admin" className="flex flex-col items-center gap-1 text-[#2563EB] hover:text-[#00D4FF] transition-colors group">
+                  <div className="p-2 rounded-lg bg-[#2563EB]/10 group-hover:bg-[#2563EB]/20 transition-colors">
+                    <User className="h-5 w-5" />
+                  </div>
+                  <span className="text-[9px] font-black uppercase tracking-widest">Admin</span>
+                </Link>
+              ) : (
+                <Link href="/login" className="flex flex-col items-center gap-1 text-[#64748B] hover:text-white transition-colors group">
+                  <div className="p-2 rounded-lg group-hover:bg-[#1A2236] transition-colors">
+                    <User className="h-5 w-5" />
+                  </div>
+                  <span className="text-[9px] font-bold uppercase tracking-widest">Sign In</span>
+                </Link>
+              )}
+            </div>
+
+            {/* Mobile Icons */}
+            <div className="flex md:hidden items-center gap-4 ml-auto">
+              {session ? (
+                <Link href="/admin" className="text-[#2563EB]"><User className="h-6 w-6" /></Link>
+              ) : (
+                <Link href="/login" className="text-[#94A3B8] hover:text-white"><User className="h-6 w-6" /></Link>
+              )}
+            </div>
+          </div>
+
+          {/* Search Bar — Mobile */}
+          <div className="lg:hidden w-full pb-2">
             <GlobalSearch />
-          </div>
-
-          {/* Action Icons — Desktop */}
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="/support" className="flex flex-col items-center gap-1 text-[#64748B] hover:text-[#00D4FF] transition-colors group">
-              <div className="p-2 rounded-lg group-hover:bg-[#2563EB]/10 transition-colors">
-                <Headphones className="h-5 w-5" />
-              </div>
-              <span className="text-[9px] font-bold uppercase tracking-widest">Support</span>
-            </Link>
-            
-            <Link href="/compare" className="flex flex-col items-center gap-1 text-[#64748B] hover:text-[#00D4FF] transition-colors group relative">
-              <div className="p-2 rounded-lg group-hover:bg-[#2563EB]/10 transition-colors">
-                <Scale className="h-5 w-5" />
-                <CompareBadge />
-              </div>
-              <span className="text-[9px] font-bold uppercase tracking-widest">Compare</span>
-            </Link>
-            
-            <div className="w-px h-8 bg-[#1E2D45]" />
-            
-            {session ? (
-              <Link href="/admin" className="flex flex-col items-center gap-1 text-[#2563EB] hover:text-[#00D4FF] transition-colors group">
-                <div className="p-2 rounded-lg bg-[#2563EB]/10 group-hover:bg-[#2563EB]/20 transition-colors">
-                  <User className="h-5 w-5" />
-                </div>
-                <span className="text-[9px] font-black uppercase tracking-widest">Admin</span>
-              </Link>
-            ) : (
-              <Link href="/login" className="flex flex-col items-center gap-1 text-[#64748B] hover:text-white transition-colors group">
-                <div className="p-2 rounded-lg group-hover:bg-[#1A2236] transition-colors">
-                  <User className="h-5 w-5" />
-                </div>
-                <span className="text-[9px] font-bold uppercase tracking-widest">Sign In</span>
-              </Link>
-            )}
-          </div>
-
-          {/* Mobile Icons */}
-          <div className="flex md:hidden items-center gap-4 ml-auto">
-            {session ? (
-              <Link href="/admin" className="text-[#2563EB]"><User className="h-6 w-6" /></Link>
-            ) : (
-              <Link href="/login" className="text-[#94A3B8] hover:text-white"><User className="h-6 w-6" /></Link>
-            )}
           </div>
         </div>
 

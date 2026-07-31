@@ -27,10 +27,10 @@ const PERIPHERALS = [
 ];
 
 const TRUST_BADGES = [
-  { icon: ShieldCheck, title: 'Genuine Products', desc: '100% Brand Warranty', color: '#22C55E' },
-  { icon: Headphones,  title: 'Premium Support',  desc: 'Expert Tech Assistance', color: '#2563EB' },
-  { icon: Truck,       title: 'Fast Shipping',    desc: 'Secure & Insured', color: '#F59E0B' },
-  { icon: RefreshCcw,  title: 'Easy Returns',     desc: 'Hassle-free Process', color: '#A78BFA' },
+  { image: '/images/icons/shield_icon_1785527884722.png', title: 'Genuine Products', desc: '100% Brand Warranty', color: '#22C55E' },
+  { image: '/images/icons/headset_icon_1785527919743.png',  title: 'Premium Support',  desc: 'Expert Tech Assistance', color: '#2563EB' },
+  { image: '/images/icons/truck_icon_1785527950660.png',       title: 'Fast Shipping',    desc: 'Secure & Insured', color: '#F59E0B' },
+  { image: '/images/icons/return_icon_1785527993456.png',  title: 'Easy Returns',     desc: 'Hassle-free Process', color: '#A78BFA' },
 ];
 
 function SectionTitle({ label, title }: { label: string; title: string }) {
@@ -55,7 +55,7 @@ export default function Home() {
         <div className="container mx-auto px-4 flex flex-wrap items-center justify-center gap-8 md:gap-16 text-white text-xs font-bold uppercase tracking-wider">
           {['15+ Years Experience', '10,000+ Happy Customers', "Tirupati's #1 PC Store", 'Official Brand Partner'].map((s) => (
             <span key={s} className="flex items-center gap-2 opacity-90">
-              <Star className="h-3 w-3 fill-white" /> {s}
+              <div className="relative w-4 h-4"><Image src="/images/icons/star_icon_1785528596709.png" alt="Star" fill className="object-contain" /></div> {s}
             </span>
           ))}
         </div>
@@ -105,43 +105,43 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
             {/* Banner A — CPU Upgrade */}
-            <Link href="/products?category=processors" className="group relative rounded-2xl overflow-hidden flex items-center gap-6 p-6 md:p-8 min-h-[160px] border border-[#1E2D45] hover:border-[#2563EB]/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:-translate-y-1">
+            <Link href="/products?category=processors" className="group relative rounded-2xl overflow-hidden flex flex-col-reverse sm:flex-row items-center sm:justify-between gap-4 sm:gap-6 p-5 md:p-8 border border-[#1E2D45] hover:border-[#2563EB]/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:-translate-y-1">
               {/* Background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628] via-[#0F1E38] to-[#0A1628]" />
-              <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#2563EB]/15 to-transparent group-hover:from-[#2563EB]/30 transition-all duration-500" />
+              <div className="absolute right-0 top-0 bottom-0 w-full sm:w-1/2 bg-gradient-to-t sm:bg-gradient-to-l from-[#2563EB]/15 to-transparent group-hover:from-[#2563EB]/30 transition-all duration-500" />
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#2563EB]/80 to-transparent group-hover:via-[#00D4FF] transition-all duration-500" />
               {/* Animated glow dot */}
               <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#00D4FF] shadow-[0_0_12px_rgba(0,212,255,0.9)] animate-pulse" />
 
-              <div className="relative z-10 flex-1">
+              <div className="relative z-10 flex-1 text-center sm:text-left w-full">
                 <span className="block text-[9px] font-black uppercase tracking-[0.4em] text-[#00D4FF] mb-1 group-hover:text-white transition-colors">Hot Category</span>
-                <h3 className="text-xl md:text-2xl font-black text-white uppercase leading-tight mb-2 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all">Upgrade Your<br/>CPU Today</h3>
-                <p className="text-xs text-[#64748B] mb-4 group-hover:text-[#94A3B8] transition-colors">Intel & AMD latest gen processors. Build faster, render faster.</p>
+                <h3 className="text-xl md:text-2xl font-black text-white uppercase leading-tight mb-2 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all">Upgrade Your<br className="hidden sm:block"/>CPU Today</h3>
+                <p className="text-xs text-[#64748B] mb-4 group-hover:text-[#94A3B8] transition-colors max-w-[200px] mx-auto sm:mx-0">Intel & AMD latest gen processors. Build faster, render faster.</p>
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00D4FF] group-hover:gap-3 transition-all">
                   Shop Processors <ArrowRight className="h-3.5 w-3.5" />
                 </span>
               </div>
-              <div className="relative z-10 w-28 h-28 flex-shrink-0 group-hover:scale-125 transition-transform duration-700 ease-out">
+              <div className="relative z-10 w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 group-hover:scale-110 transition-transform duration-700 ease-out mt-2 sm:mt-0">
                 <Image src="/images/products/intel_cpu_isolated_1785504512463.png" alt="CPU" fill className="object-contain drop-shadow-[0_0_20px_rgba(37,99,235,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(37,99,235,0.8)] transition-all" />
               </div>
             </Link>
 
             {/* Banner B — GPU Deals */}
-            <Link href="/products?category=graphics-cards" className="group relative rounded-2xl overflow-hidden flex items-center gap-6 p-6 md:p-8 min-h-[160px] border border-[#1E2D45] hover:border-[#A78BFA]/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(167,139,250,0.3)] hover:-translate-y-1">
+            <Link href="/products?category=graphics-cards" className="group relative rounded-2xl overflow-hidden flex flex-col-reverse sm:flex-row items-center sm:justify-between gap-4 sm:gap-6 p-5 md:p-8 border border-[#1E2D45] hover:border-[#A78BFA]/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(167,139,250,0.3)] hover:-translate-y-1">
               <div className="absolute inset-0 bg-gradient-to-r from-[#130A28] via-[#1A0F35] to-[#130A28]" />
-              <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#A78BFA]/15 to-transparent group-hover:from-[#A78BFA]/30 transition-all duration-500" />
+              <div className="absolute right-0 top-0 bottom-0 w-full sm:w-1/2 bg-gradient-to-t sm:bg-gradient-to-l from-[#A78BFA]/15 to-transparent group-hover:from-[#A78BFA]/30 transition-all duration-500" />
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#A78BFA]/80 to-transparent group-hover:via-white transition-all duration-500" />
               <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-[#A78BFA] shadow-[0_0_12px_rgba(167,139,250,0.9)] animate-pulse" />
 
-              <div className="relative z-10 flex-1">
+              <div className="relative z-10 flex-1 text-center sm:text-left w-full">
                 <span className="block text-[9px] font-black uppercase tracking-[0.4em] text-[#A78BFA] mb-1 group-hover:text-white transition-colors">Best Seller</span>
-                <h3 className="text-xl md:text-2xl font-black text-white uppercase leading-tight mb-2 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all">RTX 4000 Series<br/>GPUs In Stock</h3>
-                <p className="text-xs text-[#64748B] mb-4 group-hover:text-[#94A3B8] transition-colors">NVIDIA RTX 4070, 4080, 4090 — all variants available.</p>
+                <h3 className="text-xl md:text-2xl font-black text-white uppercase leading-tight mb-2 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all">RTX 4000 Series<br className="hidden sm:block"/>GPUs In Stock</h3>
+                <p className="text-xs text-[#64748B] mb-4 group-hover:text-[#94A3B8] transition-colors max-w-[200px] mx-auto sm:mx-0">NVIDIA RTX 4070, 4080, 4090 — all variants available.</p>
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#A78BFA] group-hover:gap-3 transition-all">
                   View GPUs <ArrowRight className="h-3.5 w-3.5" />
                 </span>
               </div>
-              <div className="relative z-10 w-28 h-28 flex-shrink-0 group-hover:scale-125 transition-transform duration-700 ease-out">
+              <div className="relative z-10 w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 group-hover:scale-110 transition-transform duration-700 ease-out mt-2 sm:mt-0">
                 <Image src="/images/products/rtx_4090_isolated_1785504487639.png" alt="GPU" fill className="object-contain drop-shadow-[0_0_20px_rgba(167,139,250,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(167,139,250,0.8)] transition-all" />
               </div>
             </Link>
@@ -162,7 +162,7 @@ export default function Home() {
               <div className="absolute top-0 right-0 w-40 h-40 bg-[#2563EB] opacity-5 blur-3xl rounded-full" />
               <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-black px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(239,68,68,0.5)] z-10">-12%</div>
               <div className="absolute top-4 right-4 flex items-center gap-1 text-[10px] text-[#F59E0B] font-bold bg-[#F59E0B]/10 border border-[#F59E0B]/20 px-2 py-1 rounded-md">
-                <Zap className="h-3 w-3" /> HOT
+                <div className="relative w-3 h-3"><Image src="/images/icons/zap_icon_1785528634168.png" alt="Zap" fill className="object-contain" /></div> HOT
               </div>
               <h3 className="text-base font-black text-white mt-8 mb-1 leading-tight">MSI GeForce RTX 4090 SUPRIM X 24G</h3>
               <p className="text-xs text-[#475569] mb-4 leading-relaxed">The ultimate GeForce GPU. Enormous leap in performance, efficiency, and AI-powered graphics.</p>
@@ -251,10 +251,10 @@ export default function Home() {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#2563EB]/30 to-transparent" />
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {TRUST_BADGES.map(({ icon: Icon, title, desc, color }) => (
+            {TRUST_BADGES.map(({ image, title, desc, color }) => (
               <div key={title} className="flex flex-col items-center text-center gap-3 p-6 rounded-2xl border border-[#1E2D45] bg-[#0F1624] hover:border-[#1E2D45]/80 transition-all hover:bg-[#111827] group">
-                <div className="flex items-center justify-center w-12 h-12 rounded-xl" style={{ background: `${color}15`, boxShadow: `0 0 16px ${color}25` }}>
-                  <Icon className="h-6 w-6" style={{ color }} />
+                <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: `${color}10`, boxShadow: `0 0 20px ${color}15` }}>
+                  <Image src={image} alt={title} fill className="object-contain p-2 group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <div>
                   <h4 className="text-sm font-black text-white uppercase tracking-wide">{title}</h4>

@@ -17,7 +17,7 @@ export function BottomNav() {
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#080C14]/95 backdrop-blur-xl border-t border-[#1E2D45] flex justify-around items-center h-16 pb-safe z-50 shadow-[0_-8px_24px_rgba(0,0,0,0.6)]">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#080C14]/95 backdrop-blur-xl border-t border-[#1E2D45] flex justify-around items-center h-16 pb-[env(safe-area-inset-bottom)] z-50 shadow-[0_-8px_24px_rgba(0,0,0,0.6)]">
       {navItems.map((item) => {
         const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
         const Icon = item.icon;

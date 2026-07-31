@@ -136,9 +136,9 @@ export const ScrollytellingHero = () => {
   const visibility4 = useTransform(scrollYProgress, [0.7, 0.75, 1], ["hidden", "visible", "visible"]);
 
   return (
-    <section ref={containerRef} className="relative h-[400vh] bg-black">
+    <section ref={containerRef} className="relative h-[300vh] md:h-[400vh] bg-black">
       {/* Sticky Container */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center">
         {/* Canvas for Image Sequence */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover z-0" />
 
