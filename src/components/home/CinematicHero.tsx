@@ -5,9 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, Calendar, Users, Mouse } from 'lucide-react';
-import dynamic from 'next/dynamic';
-
-const Hero3D = dynamic(() => import('./Hero3D'), { ssr: false });
+import Image from 'next/image';
 
 export function CinematicHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -145,10 +143,28 @@ export function CinematicHero() {
           </div>
         </motion.div>
 
-        {/* 3D Canvas Container (Right Side) */}
-        <div className="absolute inset-0 z-10 w-full h-full pointer-events-auto md:w-3/5 md:left-auto md:right-0">
-          <Hero3D scrollProgress={scrollYProgress} isBooted={isBooted} />
-        </div>
+        {/* Image Container (Right Side) */}
+        <motion.div 
+          style={{ y: useTransform(scrollYProgress, [0, 1], [0, 150]) }}
+          className="absolute inset-0 z-10 w-full h-full pointer-events-none md:w-1/2 md:left-auto md:right-10 flex items-center justify-center"
+        >
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, x: 50 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 1.2, type: 'spring' }}
+            className="relative w-full max-w-lg aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_0_100px_rgba(37,99,235,0.2)] border border-white/5"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=100&w=1200"
+              alt="Premium Custom Gaming PC"
+              fill
+              className="object-cover"
+              priority
+            />
+            {/* Subtle overlay gradient to blend with the dark theme */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/80 via-transparent to-transparent mix-blend-overlay" />
+          </motion.div>
+        </motion.div>
 
         {/* Scroll Indicator */}
         <motion.div 
