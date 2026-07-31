@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 const ICONS = [
   { icon: Cpu, label: 'Processors' },
@@ -38,9 +39,7 @@ const PRODUCTS = [
   },
 ];
 
-import dynamic from 'next/dynamic';
-
-const Hero3D = dynamic(() => import('@/components/home/Hero3D').then(mod => mod.Hero3D), {
+const Hero3D = dynamic(() => import('@/components/home/Hero3D').then((mod) => mod.Hero3D as any), {
   ssr: false,
   loading: () => (
     <div className="w-full h-[600px] md:h-[800px] flex flex-col items-center justify-center bg-[#FAFBFD]">
