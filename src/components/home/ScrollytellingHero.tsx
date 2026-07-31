@@ -2,198 +2,269 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { ArrowRight, MessageCircle } from 'lucide-react';
 
 const FRAME_COUNT = 232;
-
 const preloadedImages: HTMLImageElement[] = [];
 
-// Helper to format frame number
 const getFramePath = (index: number) => {
   const paddedIndex = index.toString().padStart(3, '0');
   return `/images/hero-sequence/ezgif-frame-${paddedIndex}.jpg`;
 };
 
+// Each slide: headline, sub, accent color
+const SLIDES = [
+  {
+    eyebrow: 'Charmila Computers',
+    headline: ['UNLEASH', 'THE BEAST'],
+    sub: 'RTX 4090 · Intel 14th Gen · In Stock Now',
+    accent: '#2563EB',
+  },
+  {
+    eyebrow: 'Performance',
+    headline: ['ZERO', 'LIMITS'],
+    sub: 'DDR5 RAM · NVMe SSD · Liquid Cooling',
+    accent: '#00D4FF',
+  },
+  {
+    eyebrow: 'Expert Assembly',
+    headline: ['YOUR BUILD,', 'OUR CRAFT'],
+    sub: 'Custom Gaming PCs built by professionals',
+    accent: '#A78BFA',
+  },
+  {
+    eyebrow: 'Tirupati's #1 PC Store',
+    headline: ['GET YOURS', 'TODAY'],
+    sub: 'Walk in or order via WhatsApp — same day advice',
+    accent: '#22C55E',
+    cta: true,
+  },
+];
+
 export const ScrollytellingHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ['start start', 'end end'],
   });
 
-  // Preload images sequentially in batches to prevent network bottleneck
+  // ── Preload frames in batches ──────────────────────────
   useEffect(() => {
     let loadedCount = 0;
 
-    const loadImage = (index: number): Promise<void> => {
-      return new Promise((resolve) => {
+    const loadImage = (index: number): Promise<void> =>
+      new Promise((resolve) => {
         const img = new Image();
         img.src = getFramePath(index);
         img.onload = () => {
           loadedCount++;
           setImagesLoaded(loadedCount);
-          // Draw first frame as soon as it's loaded
-          if (index === 1 && canvasRef.current) {
-            const ctx = canvasRef.current.getContext('2d');
-            if (ctx) renderFrame(1);
-          }
+          if (index === 1 && canvasRef.current) renderFrame(1);
           resolve();
         };
-        img.onerror = () => resolve(); // Resolve anyway on error
+        img.onerror = () => resolve();
         preloadedImages[index] = img;
       });
-    };
 
-    const preloadSequentially = async () => {
-      // Load frame 1 first for immediate display
+    const run = async () => {
       await loadImage(1);
-      
-      // Load remaining frames in small batches
-      const BATCH_SIZE = 8;
-      for (let i = 2; i <= FRAME_COUNT; i += BATCH_SIZE) {
-        const batch = [];
-        for (let j = 0; j < BATCH_SIZE && (i + j) <= FRAME_COUNT; j++) {
+      const BATCH = 8;
+      for (let i = 2; i <= FRAME_COUNT; i += BATCH) {
+        const batch: Promise<void>[] = [];
+        for (let j = 0; j < BATCH && i + j <= FRAME_COUNT; j++) {
           batch.push(loadImage(i + j));
         }
         await Promise.all(batch);
       }
     };
-
-    preloadSequentially();
+    run();
   }, []);
 
+  // ── Render canvas frame ────────────────────────────────
   const renderFrame = (index: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
     const img = preloadedImages[index];
     if (!img) return;
 
-    // Set canvas dimensions to window inner sizes
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Draw image to cover or contain (we will use 'cover' for a better hero experience)
     const hRatio = canvas.width / img.width;
     const vRatio = canvas.height / img.height;
-    const ratio = Math.max(hRatio, vRatio); // Use Math.max for cover, Math.min for contain
-    const centerShift_x = (canvas.width - img.width * ratio) / 2;
-    const centerShift_y = (canvas.height - img.height * ratio) / 2;
+    const ratio = Math.max(hRatio, vRatio);
+    const cx = (canvas.width - img.width * ratio) / 2;
+    const cy = (canvas.height - img.height * ratio) / 2;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Draw black background just in case
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.drawImage(
-      img,
-      0, 0, img.width, img.height,
-      centerShift_x, centerShift_y, img.width * ratio, img.height * ratio
-    );
+    ctx.drawImage(img, 0, 0, img.width, img.height, cx, cy, img.width * ratio, img.height * ratio);
   };
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // Calculate the frame index based on scroll progress (1 to 240)
+  // ── Drive canvas from scroll ───────────────────────────
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
     const frameIndex = Math.max(1, Math.min(FRAME_COUNT, Math.floor(latest * (FRAME_COUNT - 1)) + 1));
     requestAnimationFrame(() => renderFrame(frameIndex));
+
+    // Determine active slide from scroll position
+    const slideIndex = Math.min(SLIDES.length - 1, Math.floor(latest * SLIDES.length));
+    setActiveSlide(slideIndex);
   });
 
-  // Resize handler to redraw current frame
+  // ── Resize handler ─────────────────────────────────────
   useEffect(() => {
-    const handleResize = () => {
+    const onResize = () => {
       const latest = scrollYProgress.get();
       const frameIndex = Math.max(1, Math.min(FRAME_COUNT, Math.floor(latest * (FRAME_COUNT - 1)) + 1));
       renderFrame(frameIndex);
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, [scrollYProgress]);
 
+  // ── Per-slide scroll transforms ────────────────────────
+  // Slide 0: 0–0.25
+  const op0 = useTransform(scrollYProgress, [0, 0.04, 0.2, 0.25], [0, 1, 1, 0]);
+  const x0  = useTransform(scrollYProgress, [0, 0.04, 0.2, 0.25], [-60, 0, 0, 60]);
 
-  // Text Overlay Opacities and Y transforms based on scroll progress
-  // Section 1
-  const opacity1 = useTransform(scrollYProgress, [0, 0.05, 0.15, 0.2], [1, 1, 0, 0]);
-  const y1 = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
+  // Slide 1: 0.25–0.5
+  const op1 = useTransform(scrollYProgress, [0.25, 0.29, 0.45, 0.5], [0, 1, 1, 0]);
+  const x1  = useTransform(scrollYProgress, [0.25, 0.29, 0.45, 0.5], [-60, 0, 0, 60]);
 
-  // Section 2
-  const opacity2 = useTransform(scrollYProgress, [0.2, 0.25, 0.4, 0.45], [0, 1, 1, 0]);
-  const y2 = useTransform(scrollYProgress, [0.2, 0.45], [50, -50]);
+  // Slide 2: 0.5–0.75
+  const op2 = useTransform(scrollYProgress, [0.5, 0.54, 0.7, 0.75], [0, 1, 1, 0]);
+  const x2  = useTransform(scrollYProgress, [0.5, 0.54, 0.7, 0.75], [-60, 0, 0, 60]);
 
-  // Section 3
-  const opacity3 = useTransform(scrollYProgress, [0.45, 0.5, 0.65, 0.7], [0, 1, 1, 0]);
-  const y3 = useTransform(scrollYProgress, [0.45, 0.7], [50, -50]);
+  // Slide 3: 0.75–1.0
+  const op3 = useTransform(scrollYProgress, [0.75, 0.8, 1, 1], [0, 1, 1, 1]);
+  const x3  = useTransform(scrollYProgress, [0.75, 0.8, 1, 1], [-60, 0, 0, 0]);
 
-  // Section 4
-  const opacity4 = useTransform(scrollYProgress, [0.75, 0.8, 1, 1], [0, 1, 1, 1]);
-  const y4 = useTransform(scrollYProgress, [0.75, 1], [50, 0]);
+  const slides = [
+    { opacity: op0, x: x0 },
+    { opacity: op1, x: x1 },
+    { opacity: op2, x: x2 },
+    { opacity: op3, x: x3 },
+  ];
 
   return (
     <section ref={containerRef} className="relative h-[400vh] bg-black">
-      {/* Sticky Container */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
-        {/* Canvas for Image Sequence */}
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover z-0" />
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
 
-        {/* Loading Indicator */}
+        {/* Canvas */}
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
+
+        {/* Dark vignette overlay — stronger on left for text legibility */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+
+        {/* Loading bar */}
         {imagesLoaded < FRAME_COUNT && (
-          <div className="absolute top-4 right-4 z-50 text-white text-xs bg-black/50 px-2 py-1 rounded">
-            Loading... {Math.round((imagesLoaded / FRAME_COUNT) * 100)}%
+          <div className="absolute bottom-0 left-0 right-0 z-50 h-[2px] bg-[#1E2D45]">
+            <div
+              className="h-full bg-[#2563EB] transition-all duration-300"
+              style={{ width: `${(imagesLoaded / FRAME_COUNT) * 100}%` }}
+            />
           </div>
         )}
 
-        {/* Text Overlays Layer */}
-        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center items-center text-white px-4 text-center">
-          
-          {/* Text 1 */}
-          <motion.div style={{ opacity: opacity1, y: y1 }} className="absolute">
-            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-              Future Ready Beast
-            </h1>
-            <p className="text-xl md:text-2xl font-light text-gray-300">
-              Unleash the RTX 4090.
-            </p>
-          </motion.div>
-
-          {/* Text 2 */}
-          <motion.div style={{ opacity: opacity2, y: y2 }} className="absolute">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white drop-shadow-lg">
-              Maximum Cooling
-            </h2>
-            <p className="text-xl md:text-2xl font-light text-gray-200">
-              Zero Bottlenecks. 100% Performance.
-            </p>
-          </motion.div>
-
-          {/* Text 3 */}
-          <motion.div style={{ opacity: opacity3, y: y3 }} className="absolute">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 text-white drop-shadow-lg">
-              Precision Engineered
-            </h2>
-            <p className="text-xl md:text-2xl font-light text-gray-200">
-              Crafted for the elite gamer.
-            </p>
-          </motion.div>
-
-          {/* Text 4 */}
-          <motion.div style={{ opacity: opacity4, y: y4 }} className="absolute flex flex-col items-center">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-6 bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-              Your Dream Build, Delivered
-            </h2>
-            <a 
-              href="https://wa.me/919010177427?text=Hello,%20I'd%20like%20to%20buy%20the%20RTX%204090%20SUPRIM%20X" 
-              target="_blank" 
-              rel="noreferrer"
-              className="pointer-events-auto bg-white text-black hover:bg-gray-200 font-bold py-4 px-10 rounded-full text-lg transition-transform hover:scale-105"
-            >
-              Order Now
-            </a>
-          </motion.div>
-
+        {/* Scroll progress indicator dots (right side) */}
+        <div className="absolute right-6 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
+          {SLIDES.map((_, i) => (
+            <div
+              key={i}
+              className="w-1.5 rounded-full transition-all duration-500"
+              style={{
+                height: activeSlide === i ? 28 : 8,
+                background: activeSlide === i ? SLIDES[i].accent : 'rgba(255,255,255,0.2)',
+                boxShadow: activeSlide === i ? `0 0 8px ${SLIDES[i].accent}` : 'none',
+              }}
+            />
+          ))}
         </div>
+
+        {/* Text Overlays */}
+        <div className="absolute inset-0 z-10 flex items-center pointer-events-none">
+          <div className="container mx-auto px-6 md:px-12 max-w-5xl">
+            {SLIDES.map((slide, i) => (
+              <motion.div
+                key={i}
+                style={{ opacity: slides[i].opacity, x: slides[i].x }}
+                className="absolute"
+              >
+                {/* Eyebrow */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div
+                    className="h-px w-10 rounded-full"
+                    style={{ background: slide.accent }}
+                  />
+                  <span
+                    className="text-[11px] font-black uppercase tracking-[0.4em]"
+                    style={{ color: slide.accent }}
+                  >
+                    {slide.eyebrow}
+                  </span>
+                </div>
+
+                {/* Headline */}
+                <div className="mb-5">
+                  {slide.headline.map((line, li) => (
+                    <h1
+                      key={li}
+                      className="text-[clamp(3rem,10vw,8rem)] font-black uppercase leading-[0.9] tracking-[-0.03em] text-white"
+                      style={{ textShadow: '0 2px 40px rgba(0,0,0,0.8)' }}
+                    >
+                      {line}
+                    </h1>
+                  ))}
+                </div>
+
+                {/* Sub line */}
+                <p className="text-sm md:text-base text-white/60 font-medium tracking-wide mb-8 max-w-md">
+                  {slide.sub}
+                </p>
+
+                {/* CTA on last slide */}
+                {slide.cta && (
+                  <div className="flex flex-col sm:flex-row gap-3 pointer-events-auto">
+                    <a
+                      href="https://wa.me/919010177427?text=Hello%20Charmila%20Computers!%20I%20want%20to%20order."
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1EB35B] text-white text-sm font-black px-8 py-4 rounded-xl uppercase tracking-wider transition-all hover:shadow-[0_0_24px_rgba(37,211,102,0.55)] hover:scale-105 active:scale-95 group"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      Order on WhatsApp
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                    <a
+                      href="/products"
+                      className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/40 text-white text-sm font-bold px-8 py-4 rounded-xl uppercase tracking-wider transition-all"
+                    >
+                      Browse Products
+                    </a>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll hint — only at very top */}
+        <motion.div
+          style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [1, 0]) }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none"
+        >
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40">Scroll</span>
+          <div className="w-px h-10 bg-gradient-to-b from-white/40 to-transparent" />
+        </motion.div>
+
       </div>
     </section>
   );
