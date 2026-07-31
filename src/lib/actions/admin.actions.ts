@@ -45,8 +45,21 @@ export async function createProduct(formData: FormData) {
     const price = parseFloat(formData.get('price') as string);
     const stock = parseInt(formData.get('stock') as string);
     const categoryId = formData.get('categoryId') as string;
-    const brandId = formData.get('brandId') as string;
+    let brandId = formData.get('brandId') as string;
     const imageMode = formData.get('imageMode') as string;
+
+    if (brandId === 'custom_create_new') {
+      const customBrandName = formData.get('customBrandName') as string;
+      if (!customBrandName) throw new Error("Custom brand name is required");
+      const customSlug = customBrandName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      
+      const newBrand = await prisma.brand.upsert({
+        where: { slug: customSlug },
+        update: {},
+        create: { name: customBrandName, slug: customSlug }
+      });
+      brandId = newBrand.id;
+    }
     
     let finalImageUrl = '';
 
@@ -127,10 +140,23 @@ export async function editProduct(formData: FormData) {
     const price = parseFloat(formData.get('price') as string);
     const stock = parseInt(formData.get('stock') as string);
     const categoryId = formData.get('categoryId') as string;
-    const brandId = formData.get('brandId') as string;
+    let brandId = formData.get('brandId') as string;
     const imageMode = formData.get('imageMode') as string;
     const existingImage = formData.get('existingImage') as string;
     
+    if (brandId === 'custom_create_new') {
+      const customBrandName = formData.get('customBrandName') as string;
+      if (!customBrandName) throw new Error("Custom brand name is required");
+      const customSlug = customBrandName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      
+      const newBrand = await prisma.brand.upsert({
+        where: { slug: customSlug },
+        update: {},
+        create: { name: customBrandName, slug: customSlug }
+      });
+      brandId = newBrand.id;
+    }
+
     let finalImageUrl = existingImage;
 
     if (imageMode === 'url') {

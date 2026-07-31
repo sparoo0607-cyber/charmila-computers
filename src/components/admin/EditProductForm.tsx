@@ -78,10 +78,25 @@ export function EditProductForm({ product, categories, brands }: { product: any,
         </div>
         <div className="space-y-2">
           <label className="text-sm font-bold text-gray-700">Brand</label>
-          <select required name="brandId" defaultValue={product.brandId} className="w-full border-gray-300 rounded-xl p-3 border bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <select required name="brandId" defaultValue={product.brandId} className="w-full border-gray-300 rounded-xl p-3 border bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none" onChange={(e) => {
+            const el = document.getElementById('customBrandContainer');
+            if (e.target.value === 'custom_create_new') {
+              el?.classList.remove('hidden');
+              document.getElementById('customBrandName')?.setAttribute('required', 'true');
+            } else {
+              el?.classList.add('hidden');
+              document.getElementById('customBrandName')?.removeAttribute('required');
+            }
+          }}>
             {brands.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+            <option value="custom_create_new">+ Add New Brand...</option>
           </select>
         </div>
+      </div>
+
+      <div id="customBrandContainer" className="hidden space-y-2 bg-blue-50 p-4 rounded-xl border border-blue-100">
+        <label className="text-sm font-bold text-blue-900">New Brand Name</label>
+        <input id="customBrandName" name="customBrandName" type="text" className="w-full border-blue-200 rounded-xl p-3 border focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="e.g. Gigabyte" />
       </div>
 
       <div className="space-y-4">
@@ -180,11 +195,22 @@ export function EditProductForm({ product, categories, brands }: { product: any,
         </div>
       </div>
 
-      <div className="pt-6 flex justify-end">
-        <Button type="submit" disabled={isSubmitting} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md px-8">
+      <div className="pt-6 flex flex-col items-end mt-8">
+        {isSubmitting && (
+          <div className="w-full mb-4 bg-gray-200 rounded-full h-2.5 overflow-hidden">
+            <div className="bg-blue-600 h-2.5 rounded-full animate-[progress_2s_ease-in-out_infinite]" style={{ width: '100%', transformOrigin: 'left', animation: 'indeterminate 1.5s infinite linear' }}></div>
+          </div>
+        )}
+        <Button type="submit" disabled={isSubmitting} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md px-8 relative overflow-hidden">
           <Save className="h-5 w-5 mr-2" />
-          {isSubmitting ? 'Saving...' : 'Save Changes'}
+          {isSubmitting ? 'Saving Changes...' : 'Save Changes'}
         </Button>
+        <style jsx>{`
+          @keyframes indeterminate {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+          }
+        `}</style>
       </div>
     </form>
   );
