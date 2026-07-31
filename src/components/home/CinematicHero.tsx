@@ -1,51 +1,13 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Calendar, Users, Mouse } from 'lucide-react';
+import { Calendar, Users, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 export function CinematicHero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isBooted, setIsBooted] = useState(false);
-
-  // Trigger the PC boot animation at 1.5s
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsBooted(true);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Scroll tracking for the cinematic scroll effect
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // Fade out text when scrolling down
-  const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
-
   return (
-    <section ref={containerRef} className="relative w-full h-[250vh] bg-[#020617]">
-      {/* Sticky container that holds everything in the viewport */}
-      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center">
-        
-        {/* Background Effects */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
-          
-          {/* Ambient Glows */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.3 }}
-            transition={{ duration: 2, delay: 0.3 }}
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px]"
-          />
     <section className="relative min-h-screen bg-[#020617] w-full overflow-hidden flex items-center">
       {/* Background Ambient Glow */}
       <motion.div 
