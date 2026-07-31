@@ -32,7 +32,7 @@ function PCCabinet({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bo
       const targetGlassZ = isOpen ? 1 : 1.25;
       glassRef.current.position.x = THREE.MathUtils.damp(glassRef.current.position.x, targetGlassX, 3, delta);
       glassRef.current.position.z = THREE.MathUtils.damp(glassRef.current.position.z, targetGlassZ, 3, delta);
-      glassRef.current.material.opacity = THREE.MathUtils.damp(glassRef.current.material.opacity, isOpen ? 0.1 : 0.6, 3, delta);
+      (glassRef.current.material as THREE.Material).opacity = THREE.MathUtils.damp((glassRef.current.material as THREE.Material).opacity, isOpen ? 0.1 : 0.6, 3, delta);
     }
 
     // Animate GPU floating out when open

@@ -5,7 +5,6 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 
 const ICONS = [
   { icon: Cpu, label: 'Processors' },
@@ -39,15 +38,7 @@ const PRODUCTS = [
   },
 ];
 
-const Hero3D = dynamic(() => import('@/components/home/Hero3D'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[600px] md:h-[800px] flex flex-col items-center justify-center bg-[#FAFBFD]">
-      <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-      <p className="text-gray-500 font-sans animate-pulse">Initializing 3D Experience...</p>
-    </div>
-  ),
-});
+import { Hero3DWrapper } from '@/components/home/Hero3DWrapper';
 
 export default function Home() {
   return (
@@ -55,7 +46,7 @@ export default function Home() {
       
       {/* 1. INTERACTIVE 3D HERO SECTION */}
       <section className="w-full relative overflow-hidden">
-        <Hero3D />
+        <Hero3DWrapper />
       </section>
 
       {/* 2. CLEAN CATEGORY ICONS */}
