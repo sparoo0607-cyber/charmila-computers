@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { 
   ArrowRight, Cpu, Monitor, HardDrive, Fan, Mouse, Briefcase, 
-  ShieldCheck, Truck, Headphones, RefreshCcw
+  ShieldCheck, Truck, Headphones, RefreshCcw, ShoppingCart
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
