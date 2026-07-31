@@ -1,12 +1,30 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Calendar, Users, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
+const HERO_IMAGES = [
+  "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=100&w=1200", // Blue RGB
+  "https://images.unsplash.com/photo-1623910279612-4eb1522f98f6?auto=format&fit=crop&q=100&w=1200", // Pink/Purple RGB interior
+  "https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&q=100&w=1200", // Full setup
+  "https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?auto=format&fit=crop&q=100&w=1200", // Water cooled
+];
+
 export function CinematicHero() {
+  const [currentImage, setCurrentImage] = useState(0);
+
+  // Auto-advance slideshow every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative min-h-screen bg-[#020617] w-full overflow-hidden flex items-center">
       {/* Background Ambient Glow */}
@@ -110,17 +128,39 @@ export function CinematicHero() {
             initial={{ opacity: 0, scale: 0.9, x: 50 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 1.2, type: 'spring' }}
-            className="relative w-full max-w-lg aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_0_100px_rgba(37,99,235,0.2)] border border-white/5"
+            className="relative w-full max-w-lg aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_0_100px_rgba(37,99,235,0.2)] border border-white/5 bg-gray-900"
           >
-            <Image
-              src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=100&w=1200"
-              alt="Premium Custom Gaming PC"
-              fill
-              className="object-cover"
-              priority
-            />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentImage}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={HERO_IMAGES[currentImage]}
+                  alt="Premium Custom Gaming PC"
+                  fill
+                  className="object-cover"
+                  priority={currentImage === 0}
+                />
+              </motion.div>
+            </AnimatePresence>
+            
             {/* Subtle overlay gradient to blend with the dark theme */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/80 via-transparent to-transparent mix-blend-overlay" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/80 via-transparent to-transparent mix-blend-overlay z-10" />
+
+            {/* Slideshow Progress Indicators */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+              {HERO_IMAGES.map((_, idx) => (
+                <div 
+                  key={idx} 
+                  className={`h-1.5 rounded-full transition-all duration-500 ${idx === currentImage ? 'w-6 bg-blue-500' : 'w-1.5 bg-white/30'}`}
+                />
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
