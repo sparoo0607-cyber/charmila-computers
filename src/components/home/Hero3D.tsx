@@ -182,13 +182,12 @@ function PCCabinet({
       {/* Glass Panel */}
       <mesh ref={glassRef} position={[0, 0, 1.3]} castShadow>
         <boxGeometry args={[3, 4, 0.05]} />
-        <meshPhysicalMaterial 
-          color="#ffffff"
-          transmission={1}
-          opacity={0.4}
+        <meshStandardMaterial 
+          color="#0f172a"
+          opacity={0.3}
           transparent
           roughness={0.1}
-          thickness={0.1}
+          metalness={0.9}
         />
       </mesh>
 
