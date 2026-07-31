@@ -11,7 +11,7 @@ export function StoreLayout({ children }: { children: React.ReactNode }) {
 
   if (isAdmin) {
     return (
-      <main className="flex-1 flex flex-col h-full bg-gray-50">
+      <main className="admin-theme flex-1 flex flex-col h-full bg-[#F8FAFC]">
         {children}
       </main>
     );
@@ -20,7 +20,8 @@ export function StoreLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
-      <main className="flex-1 flex flex-col pb-16 md:pb-0">
+      {/* pt offsets the fixed navbar height: ~48px header + 44px category bar = 92px desktop, 56px mobile */}
+      <main className="flex-1 flex flex-col pb-16 md:pb-0 pt-[92px] md:pt-[92px]">
         {children}
       </main>
       <BottomNav />
