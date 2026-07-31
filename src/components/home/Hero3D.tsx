@@ -148,7 +148,7 @@ function PCCabinet({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bo
   );
 }
 
-export function Hero3D() {
+export default function Hero3D() {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 

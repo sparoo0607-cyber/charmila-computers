@@ -39,7 +39,7 @@ const PRODUCTS = [
   },
 ];
 
-const Hero3D = dynamic(() => import('@/components/home/Hero3D').then((mod) => mod.Hero3D as any), {
+const Hero3D = dynamic(() => import('@/components/home/Hero3D'), {
   ssr: false,
   loading: () => (
     <div className="w-full h-[600px] md:h-[800px] flex flex-col items-center justify-center bg-[#FAFBFD]">
