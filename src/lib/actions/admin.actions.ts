@@ -70,19 +70,9 @@ export async function createProduct(formData: FormData) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         
-        // Generate a unique filename
-        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-        
-        // Ensure directory exists (we assume it does or we can write directly to public for now, let's just write to public/uploads, Nextjs allows this but requires restart sometimes if the dir didn't exist, we will use a try-catch for dir creation if needed, but for simplicity let's assume public/uploads exists or create it)
-        const fs = require('fs');
-        if (!fs.existsSync(uploadDir)) {
-          fs.mkdirSync(uploadDir, { recursive: true });
-        }
-
-        const filepath = path.join(uploadDir, filename);
-        await writeFile(filepath, buffer);
-        finalImageUrl = `/uploads/${filename}`;
+        // Vercel has a read-only filesystem, so we convert uploaded images to Base64 data URIs!
+        const base64 = buffer.toString('base64');
+        finalImageUrl = `data:${file.type};base64,${base64}`;
       }
     }
     
@@ -166,17 +156,9 @@ export async function editProduct(formData: FormData) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         
-        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-        const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-        
-        const fs = require('fs');
-        if (!fs.existsSync(uploadDir)) {
-          fs.mkdirSync(uploadDir, { recursive: true });
-        }
-
-        const filepath = path.join(uploadDir, filename);
-        await writeFile(filepath, buffer);
-        finalImageUrl = `/uploads/${filename}`;
+        // Vercel has a read-only filesystem, so we convert uploaded images to Base64 data URIs!
+        const base64 = buffer.toString('base64');
+        finalImageUrl = `data:${file.type};base64,${base64}`;
       }
     }
     
