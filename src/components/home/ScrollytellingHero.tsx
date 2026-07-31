@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 
-const FRAME_COUNT = 240;
+const FRAME_COUNT = 232;
 
 const preloadedImages: HTMLImageElement[] = [];
 
