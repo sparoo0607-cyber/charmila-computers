@@ -1,32 +1,37 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { usePCBuilderStore, PCComponent } from '@/store/usePCBuilderStore';
-import { Search, Plus, Check, Trash2, AlertTriangle, Zap, Cpu, MessageCircle, Hammer } from 'lucide-react';
+import { Search, Plus, Trash2, Printer, Share2, Download, MessageCircle, Link as LinkIcon, AlertTriangle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getProductsForPCBuilder } from '@/lib/actions/product.actions';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
-const COMPONENT_GROUPS = [
-  {
-    title: 'Core Components',
-    items: ['CPU', 'Motherboard', 'RAM', 'GPU', 'SSD', 'HDD', 'PSU', 'Cabinet', 'Cooler', 'Fans']
-  },
-  {
-    title: 'Optional Components',
-    items: ['Thermal Paste', 'Wi-Fi Adapter', 'RGB Accessories', 'Cable Extensions', 'Optical Drive']
-  },
-  {
-    title: 'Peripherals',
-    items: ['Monitor', 'Keyboard', 'Mouse', 'Headset', 'Webcam']
-  }
+const COMPONENT_CATEGORIES = [
+  { id: 'CPU', name: 'Processor (CPU)', icon: '/images/products/intel_cpu_isolated_1785504512463.png' },
+  { id: 'Cooler', name: 'Cooling System (CPU Cooler)', icon: '/images/products/aio_cooler_isolated_1785504617114.png' },
+  { id: 'Motherboard', name: 'Motherboard', icon: '/images/products/gaming_motherboard_isolated_1785504525296.png' },
+  { id: 'RAM', name: 'Memory (RAM)', icon: '/images/products/ddr5_ram_isolated_1785504561946.png' },
+  { id: 'SSD', name: 'Solid State Drive (M.2/SATA)', icon: '/images/products/ssd_isolated_1785553958638.png' },
+  { id: 'HDD', name: 'Hard Disk Drive (Internal HDD)', icon: '/images/products/ssd_isolated_1785553958638.png' },
+  { id: 'GPU', name: 'Graphics Card (GPU/VGA)', icon: '/images/products/rtx_4090_isolated_1785504487639.png' },
+  { id: 'PSU', name: 'Power Supply Unit (SMPS/PSU)', icon: '/images/products/psu_isolated_1785553976383.png' },
+  { id: 'Cabinet', name: 'Cabinet (Case)', icon: '/images/products/pc_cabinet_isolated_1785504605408.png' },
+  { id: 'Fans', name: 'Case Fans', icon: '/images/products/fans_isolated_1785553995392.png' },
+  { id: 'Monitor', name: 'Monitor (Display)', icon: '/images/products/monitor_isolated_1785554012281.png' },
+  { id: 'Keyboard', name: 'Keyboard', icon: '/images/icons/gamepad_icon_1785528938740.png' },
+  { id: 'Mouse', name: 'Mouse (Mice)', icon: '/images/icons/gamepad_icon_1785528938740.png' },
+  { id: 'Mousepad', name: 'Mouse Pad (Mat)', icon: '/images/icons/gamepad_icon_1785528938740.png' },
+  { id: 'Headset', name: 'Headset (Headphones)', icon: '/images/icons/chat_icon_1785528796689.png' },
 ];
 
 export default function BuildPCPage() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [dbProducts, setDbProducts] = useState<PCComponent[]>([]);
   const { selectedComponents, totalPrice, selectComponent, removeComponent, clearBuild } = usePCBuilderStore();
-  const searchContainerRef = useRef<HTMLDivElement>(null);
+  
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     async function loadProducts() {
@@ -36,67 +41,27 @@ export default function BuildPCPage() {
     loadProducts();
   }, []);
 
-  // Close search dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
-        setSearchQuery('');
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const searchResults = dbProducts.filter(c => 
-    c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    c.type.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const compatibilityErrors = useMemo(() => {
-    const errors: string[] = [];
-    const cpu = selectedComponents['CPU'];
-    const mobo = selectedComponents['Motherboard'];
-    const ram = selectedComponents['RAM'];
-    const psu = selectedComponents['PSU'];
-    const gpu = selectedComponents['GPU'];
-
-    if (cpu && mobo) {
-      const cpuSocket = cpu.specs.socket;
-      const moboSocket = mobo.specs.socket;
-      if (cpuSocket && moboSocket && cpuSocket !== moboSocket) {
-        errors.push(`Socket Mismatch: ${cpuSocket} CPU with ${moboSocket} Motherboard.`);
-      }
-    }
-    if (cpu && ram) {
-      const cpuSocket = cpu.specs.socket;
-      const ramDdr = ram.specs.ddr;
-      if (cpuSocket === 'AM5' && ramDdr === 'DDR4') {
-        errors.push(`Memory Incompatible: AM5 strictly requires DDR5 RAM.`);
-      }
-    }
-    if (psu) {
-      let estimatedWattage = 50; 
-      if (cpu) estimatedWattage += 150; 
-      if (gpu) estimatedWattage += 350; 
-      
-      const psuWattageMatch = psu.specs.wattage?.match(/(\d+)/);
-      if (psuWattageMatch) {
-        const psuWattage = parseInt(psuWattageMatch[0]);
-        const requiredWattage = estimatedWattage * 1.2;
-        if (psuWattage < requiredWattage) {
-          errors.push(`Insufficient Power: Need ~${Math.ceil(requiredWattage)}W, selected ${psuWattage}W.`);
-        }
-      }
-    }
-    return errors;
+  const estimatedWattage = useMemo(() => {
+    let wattage = 50; 
+    if (selectedComponents['CPU']) wattage += 150; 
+    if (selectedComponents['GPU']) wattage += 350; 
+    return wattage;
   }, [selectedComponents]);
+
+  const toggleCategory = (categoryId: string) => {
+    if (expandedCategory === categoryId) {
+      setExpandedCategory(null);
+    } else {
+      setExpandedCategory(categoryId);
+      setSearchQuery('');
+    }
+  };
 
   const handleWhatsAppInquiry = () => {
     let message = "Hello Charmila Computers,%0a%0aI want to build this Custom PC:%0a%0a";
-    const allTypes = COMPONENT_GROUPS.flatMap(g => g.items);
-    allTypes.forEach(type => {
-      if (selectedComponents[type]) {
-        message += `*${type}:* ${selectedComponents[type]?.name}%0a`;
+    COMPONENT_CATEGORIES.forEach(cat => {
+      if (selectedComponents[cat.id]) {
+        message += `*${cat.name}:* ${selectedComponents[cat.id]?.name}%0a`;
       }
     });
     message += `%0a*Estimated Total:* ₹${totalPrice.toLocaleString('en-IN')}%0a%0aPlease send me a quotation and availability.`;
@@ -104,176 +69,254 @@ export default function BuildPCPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#040812] relative flex justify-center py-24">
+    <div className="min-h-screen bg-[#040812] relative flex justify-center py-24 pb-32">
       {/* Background Ambient Layers */}
-      <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
+      <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2563EB] opacity-10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[300px] bg-[#00D4FF] opacity-10 blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="w-full max-w-5xl h-full flex flex-col relative z-10 px-4 md:px-8">
+      <div className="w-full max-w-[1400px] h-full flex flex-col relative z-10 px-4 md:px-8">
         
         {/* Header Title */}
-        <div className="text-center mb-10">
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1A2236] border border-[#1E2D45] mb-6"
-          >
-            <Hammer className="w-3 h-3 text-[#2563EB]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#94A3B8]">Configurator</span>
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-4xl md:text-5xl font-black uppercase tracking-wider text-white mb-4"
-          >
-            Build Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#00D4FF]">Ultimate Machine</span>
-          </motion.h1>
-          <p className="text-sm text-[#64748B] max-w-lg mx-auto">Select components below. Our intelligent system will automatically check for compatibility bottlenecks.</p>
+        <div className="mb-10 text-left">
+          <h1 className="text-3xl md:text-4xl font-black uppercase tracking-wider text-white mb-3">
+            Custom PC Configurator - <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#00D4FF]">Choose Your PC Parts!</span>
+          </h1>
+          <p className="text-sm text-[#94A3B8] max-w-4xl leading-relaxed">
+            The PC configurator is the perfect tool for you to choose one by one the parts of your computer and try different configurations and budgets. Assemble a computer by parts completely to your liking. Get your basic, gaming or professional desktop pc at the best price.
+          </p>
         </div>
 
-        {/* Builder Interface */}
-        <div className="rounded-[32px] border border-[#1E2D45] bg-[#0A0F1A]/80 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col min-h-[600px]">
+        {/* Two Column Layout */}
+        <div className="flex flex-col xl:flex-row gap-8 items-start">
           
-          {/* Universal Search Header */}
-          <div className="p-6 md:p-8 border-b border-[#1E2D45] bg-[#0F1624] relative" ref={searchContainerRef}>
-            <div className="relative group max-w-2xl mx-auto">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#2563EB] to-[#00D4FF] rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
-              <div className="relative flex items-center">
-                <Search className="absolute left-4 h-5 w-5 text-[#475569]" />
-                <input 
-                  type="text" 
-                  placeholder="Search components (e.g. 'RTX 4090', 'B650', 'Ryzen 9')"
-                  className="w-full h-14 rounded-xl border border-[#1E2D45] bg-[#0A0F1A] pl-12 pr-4 text-sm text-white placeholder:text-[#475569] focus:outline-none focus:border-[#2563EB] transition-colors"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-            </div>
+          {/* Left Column: Accordion Table */}
+          <div className="flex-1 w-full bg-[#0A0F1A] border border-[#1E2D45] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             
-            <AnimatePresence>
-              {searchQuery && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                  className="absolute z-50 mt-4 left-0 right-0 mx-auto w-full max-w-2xl max-h-80 overflow-y-auto bg-[#0A0F1A] border border-[#1E2D45] rounded-xl shadow-2xl p-2 custom-scrollbar"
-                >
-                  {searchResults.length > 0 ? searchResults.map(item => (
-                    <div key={item.id} className="flex items-center justify-between p-3 hover:bg-[#1A2236] rounded-lg group transition-colors border border-transparent hover:border-[#2563EB]/30">
-                      <div>
-                        <p className="font-bold text-sm text-white">{item.name}</p>
-                        <p className="text-xs font-medium tracking-wide text-[#00D4FF] mt-1 uppercase">{item.type} • ₹{item.price.toLocaleString('en-IN')}</p>
-                      </div>
-                      <Button 
-                        size="sm" 
-                        variant={selectedComponents[item.type]?.id === item.id ? "default" : "outline"}
-                        className={selectedComponents[item.type]?.id === item.id 
-                          ? "bg-[#2563EB] text-white hover:bg-[#1D4ED8]" 
-                          : "border-[#1E2D45] text-white hover:bg-[#1A2236] hover:border-[#2563EB]"}
-                        onClick={() => {
-                          selectComponent(item.type, item);
-                          setSearchQuery('');
-                        }}
-                      >
-                        {selectedComponents[item.type]?.id === item.id ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                      </Button>
-                    </div>
-                  )) : (
-                    <div className="p-4 text-center text-[#475569] text-sm">No components found matching your search.</div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+            {/* Table Header */}
+            <div className="flex items-center justify-between p-4 bg-[#0F1624] border-b border-[#1E2D45] text-xs font-black uppercase tracking-widest text-[#94A3B8]">
+              <div className="w-1/3 pl-4">Component</div>
+              <div className="w-2/3 pl-4">Selection</div>
+            </div>
 
-          {/* Selected Components List */}
-          <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-10 custom-scrollbar relative">
-            {COMPONENT_GROUPS.map(group => (
-              <div key={group.title} className="space-y-4">
-                <h2 className="text-xs font-black text-[#00D4FF] uppercase tracking-[0.3em] flex items-center gap-4">
-                  {group.title}
-                  <div className="h-px flex-1 bg-gradient-to-r from-[#1E2D45] to-transparent" />
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {group.items.map(type => {
-                    const selected = selectedComponents[type];
-                    return (
-                      <div key={type} className={`border rounded-2xl p-4 transition-all duration-300 relative overflow-hidden group ${selected ? 'border-[#2563EB]/50 bg-[#1A2236]/30' : 'border-[#1E2D45] bg-[#0F1624] hover:border-[#2563EB]/30'}`}>
-                        {selected && <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#2563EB] to-transparent" />}
-                        <div className="flex items-center gap-4">
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-black text-xs flex-shrink-0 transition-colors ${selected ? 'bg-gradient-to-br from-[#2563EB] to-[#00D4FF] text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]' : 'bg-[#1A2236] text-[#475569]'}`}>
-                            {type.substring(0,3).toUpperCase()}
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <h3 className="font-bold text-[10px] uppercase tracking-widest text-[#64748B]">{type}</h3>
-                            <p className={`text-sm font-medium truncate mt-0.5 ${selected ? 'text-white' : 'text-[#475569]'}`}>{selected ? selected.name : 'Choose Component'}</p>
-                          </div>
+            {/* Category Rows */}
+            <div className="divide-y divide-[#1E2D45]">
+              {COMPONENT_CATEGORIES.map(category => {
+                const selected = selectedComponents[category.id];
+                const isExpanded = expandedCategory === category.id;
+                
+                // Get products for this category
+                const categoryProducts = dbProducts.filter(p => p.type === category.id);
+                const filteredProducts = categoryProducts.filter(p => 
+                  p.name.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+
+                return (
+                  <div key={category.id} className="flex flex-col bg-[#0A0F1A]">
+                    {/* Main Row */}
+                    <div 
+                      className={`flex flex-col md:flex-row md:items-center p-4 transition-colors ${selected ? 'bg-[#1A2236]/20' : 'hover:bg-[#1A2236]/50'} ${isExpanded ? 'bg-[#1A2236]' : ''}`}
+                    >
+                      {/* Component Name Column */}
+                      <div className="w-full md:w-1/3 flex items-center pl-4 mb-3 md:mb-0 gap-3">
+                        <div className="w-8 h-8 relative opacity-60">
+                          <Image src={category.icon} alt={category.name} fill className="object-contain" />
                         </div>
-                        <div className="mt-4 pt-3 border-t border-[#1E2D45]/50 flex items-center justify-between">
-                          {selected ? (
-                            <>
-                              <p className="font-black text-white text-base">₹{selected.price.toLocaleString('en-IN')}</p>
-                              <Button variant="ghost" size="icon" onClick={() => removeComponent(type)} className="text-[#EF4444] hover:bg-[#EF4444]/10 hover:text-[#EF4444] h-8 w-8">
-                                <Trash2 className="h-4 w-4" />
+                        <span className="text-sm font-semibold text-white/90">{category.name}</span>
+                      </div>
+
+                      {/* Selection Column */}
+                      <div className="w-full md:w-2/3 flex items-center justify-between pl-4">
+                        {selected ? (
+                          // Selected State
+                          <div className="flex items-center justify-between w-full pr-4">
+                            <div className="flex items-center gap-4">
+                              <div className="relative w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center p-1">
+                                {selected.image ? (
+                                  <Image src={selected.image} alt={selected.name} fill className="object-contain drop-shadow-lg" />
+                                ) : (
+                                  <div className="w-full h-full bg-[#1A2236] rounded" />
+                                )}
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-sm font-bold text-[#00D4FF]">{selected.name}</span>
+                                <span className="text-xs font-medium text-white/50">₹{selected.price.toLocaleString('en-IN')}</span>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white h-8 rounded text-xs px-4"
+                                onClick={() => toggleCategory(category.id)}
+                              >
+                                Change
                               </Button>
-                            </>
-                          ) : (
-                            <Button variant="outline" size="sm" onClick={() => setSearchQuery(type)} className="w-full h-8 text-xs bg-transparent border-[#1E2D45] text-white hover:bg-[#1A2236] hover:border-[#00D4FF] uppercase tracking-widest">
-                              Select
-                            </Button>
-                          )}
-                        </div>
+                              <button 
+                                onClick={(e) => { e.stopPropagation(); removeComponent(category.id); }}
+                                className="w-8 h-8 flex items-center justify-center rounded bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          // Unselected State
+                          <div 
+                            className="flex items-center justify-between w-full pr-4 cursor-pointer"
+                            onClick={() => toggleCategory(category.id)}
+                          >
+                            <span className="text-sm text-[#94A3B8] font-medium">Choose {category.name}</span>
+                            <div className="w-8 h-8 rounded-full border border-[#1E2D45] flex items-center justify-center text-[#94A3B8] hover:bg-[#2563EB] hover:text-white hover:border-[#2563EB] transition-colors">
+                              <Plus className="w-4 h-4" />
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
+                    </div>
+
+                    {/* Expanded Content (Sub-table) */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden bg-[#050810] border-t border-[#1E2D45]"
+                        >
+                          <div className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                              <div className="relative w-full max-w-md">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#475569]" />
+                                <input 
+                                  type="text" 
+                                  placeholder={`Search ${category.name}...`}
+                                  className="w-full h-10 rounded-lg border border-[#1E2D45] bg-[#0A0F1A] pl-10 pr-4 text-sm text-white placeholder:text-[#475569] focus:outline-none focus:border-[#2563EB]"
+                                  value={searchQuery}
+                                  onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                              </div>
+                              <button onClick={() => setExpandedCategory(null)} className="p-2 text-[#475569] hover:text-white">
+                                <X className="w-5 h-5" />
+                              </button>
+                            </div>
+
+                            {/* Sub-table */}
+                            <div className="w-full overflow-x-auto rounded-xl border border-[#1E2D45]">
+                              <table className="w-full text-left text-sm text-white/80">
+                                <thead className="bg-[#0F1624] text-xs uppercase text-[#94A3B8]">
+                                  <tr>
+                                    <th className="px-4 py-3 font-semibold text-center w-20">Image</th>
+                                    <th className="px-4 py-3 font-semibold">Product Name</th>
+                                    <th className="px-4 py-3 font-semibold text-center">Unit Price</th>
+                                    <th className="px-4 py-3 font-semibold text-center">Availability</th>
+                                    <th className="px-4 py-3 font-semibold text-center w-32">Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="divide-y divide-[#1E2D45]">
+                                  {filteredProducts.length > 0 ? filteredProducts.map(product => (
+                                    <tr key={product.id} className="hover:bg-[#1A2236]/30 transition-colors">
+                                      <td className="px-4 py-3">
+                                        <div className="relative w-12 h-12 mx-auto bg-white/5 rounded p-1">
+                                          {product.image && <Image src={product.image} alt={product.name} fill className="object-contain" />}
+                                        </div>
+                                      </td>
+                                      <td className="px-4 py-3 font-medium text-white">{product.name}</td>
+                                      <td className="px-4 py-3 text-center text-[#00D4FF] font-medium">₹{product.price.toLocaleString('en-IN')}</td>
+                                      <td className="px-4 py-3 text-center text-green-400 text-xs font-bold">In Stock</td>
+                                      <td className="px-4 py-3 text-center">
+                                        <Button 
+                                          size="sm" 
+                                          className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs px-4 rounded h-8"
+                                          onClick={() => {
+                                            selectComponent(category.id, product);
+                                            setExpandedCategory(null);
+                                          }}
+                                        >
+                                          Select
+                                        </Button>
+                                      </td>
+                                    </tr>
+                                  )) : (
+                                    <tr>
+                                      <td colSpan={5} className="px-4 py-8 text-center text-[#475569]">
+                                        No components found for this category.
+                                      </td>
+                                    </tr>
+                                  )}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Compatibility Alerts */}
-          <AnimatePresence>
-            {compatibilityErrors.length > 0 && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-                className="mx-6 md:mx-8 mb-6 overflow-hidden"
-              >
-                <div className="p-4 rounded-xl bg-[#EF4444]/10 border border-[#EF4444]/30 shadow-[0_0_20px_rgba(239,68,68,0.1)]">
-                  <div className="flex items-center gap-2 text-[#EF4444] font-black text-sm uppercase tracking-wide mb-2">
-                    <AlertTriangle className="h-4 w-4" /> Compatibility Issues
-                  </div>
-                  <ul className="list-disc pl-5 space-y-1">
-                    {compatibilityErrors.map((error, idx) => (
-                      <li key={idx} className="text-xs text-[#FCA5A5] font-medium">{error}</li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Footer actions */}
-          <div className="p-6 md:p-8 border-t border-[#1E2D45] bg-[#0A0F1A] flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-center md:text-left w-full md:w-auto">
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#64748B] mb-1">Estimated Total</p>
-              <p className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-[#94A3B8]">₹{totalPrice.toLocaleString('en-IN')}</p>
-            </div>
+          {/* Right Column: Sticky Sidebar */}
+          <div className="w-full xl:w-80 shrink-0 sticky top-24 space-y-4">
             
-            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-              <Button 
-                variant="outline" 
-                className="h-12 px-8 bg-transparent border-[#1E2D45] text-[#94A3B8] hover:text-white hover:bg-[#1A2236] hover:border-[#475569] uppercase font-bold tracking-widest text-xs" 
-                onClick={clearBuild}
-              >
-                Clear
-              </Button>
-              <Button 
-                className="relative h-12 px-8 rounded-xl bg-gradient-to-r from-[#25D366] to-[#1DA851] text-white hover:from-[#1DA851] hover:to-[#15803D] font-black uppercase tracking-widest text-xs transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(37,211,102,0.3)] disabled:opacity-50 disabled:grayscale" 
-                onClick={handleWhatsAppInquiry}
-                disabled={compatibilityErrors.length > 0}
-              >
-                <MessageCircle className="mr-2 h-4 w-4" /> Send Build to WhatsApp
-              </Button>
+            <div className="bg-[#0A0F1A] border border-[#1E2D45] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="p-6 space-y-6">
+                
+                {/* Wattage Estimator */}
+                <div className="text-center pb-6 border-b border-[#1E2D45]">
+                  <p className="text-sm font-semibold text-[#94A3B8] uppercase tracking-wider mb-2">Estimated Wattage</p>
+                  <p className="text-3xl font-black text-white">{estimatedWattage}W</p>
+                </div>
+
+                {/* Total Price */}
+                <div className="text-center pb-6 border-b border-[#1E2D45]">
+                  <p className="text-sm font-semibold text-[#94A3B8] uppercase tracking-wider mb-2">Total Price</p>
+                  <p className="text-4xl font-black text-[#00D4FF]">₹{totalPrice.toLocaleString('en-IN')}/-</p>
+                </div>
+
+                {/* Main Action Buttons */}
+                <div className="flex flex-col gap-3">
+                  <Button 
+                    className="w-full h-14 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold uppercase tracking-wider rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:scale-105"
+                    onClick={handleWhatsAppInquiry}
+                  >
+                    Get WhatsApp Quotation
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    className="w-full h-14 border-[#1E2D45] text-white hover:bg-[#1A2236] hover:border-[#2563EB]/50 font-bold uppercase tracking-wider rounded-xl transition-all"
+                    onClick={() => window.print()}
+                  >
+                    Print Config
+                  </Button>
+                </div>
+
+              </div>
+
+              {/* Utility Grid */}
+              <div className="grid grid-cols-3 border-t border-[#1E2D45] divide-x divide-[#1E2D45]">
+                <button className="flex flex-col items-center justify-center p-4 text-[#94A3B8] hover:text-white hover:bg-[#1A2236] transition-colors group">
+                  <LinkIcon className="w-5 h-5 mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-[10px] font-bold uppercase">Share Link</span>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 text-[#94A3B8] hover:text-white hover:bg-[#1A2236] transition-colors group">
+                  <Download className="w-5 h-5 mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-[10px] font-bold uppercase">Save PDF</span>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 text-[#94A3B8] hover:text-white hover:bg-[#1A2236] transition-colors group" onClick={handleWhatsAppInquiry}>
+                  <Share2 className="w-5 h-5 mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-[10px] font-bold uppercase">WhatsApp</span>
+                </button>
+              </div>
             </div>
+
+            <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-xl">
+              <p className="text-xs text-orange-400 font-medium leading-relaxed flex gap-2">
+                <AlertTriangle className="w-4 h-4 shrink-0" />
+                <span>Important: If in doubt regarding compatibility, please contact us at the support center.</span>
+              </p>
+            </div>
+
           </div>
 
         </div>

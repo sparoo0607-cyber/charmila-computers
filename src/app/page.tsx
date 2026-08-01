@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ScrollytellingHero } from '@/components/home/ScrollytellingHero';
 import { CategoryPedestals } from '@/components/home/CategoryPedestals';
 import { BrandsMarquee } from '@/components/home/BrandsMarquee';
+import { CoolingShowcase } from '@/components/home/CoolingShowcase';
 import { FlashDealsBanner } from '@/components/home/FlashDealsBanner';
 import { BuildPcCTA } from '@/components/home/BuildPcCTA';
 import { ProductCard } from '@/components/ui/ProductCard';
@@ -185,17 +186,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 6. PROMO BANNER — COOLING ────────────────────── */}
-      <PromoBanner
-        imageSrc="https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?auto=format&fit=crop&q=80&w=1200"
-        title="Maximum Cooling. Zero Noise."
-        subtitle="Liquid Cooling Systems"
-        description="Experience the ultimate in thermal performance. Our AIO and custom loop coolers keep your beast running ice cold."
-        linkText="Shop Cooling"
-        linkHref="/products?category=coolers"
-        align="left"
-        accentColor="#00D4FF"
-      />
+      {/* ── 6. COOLING SHOWCASE ────────────────────────────── */}
+      <CoolingShowcase />
 
       {/* ── 7. FLASH DEAL BANNER ─────────────────────────── */}
       <FlashDealsBanner />

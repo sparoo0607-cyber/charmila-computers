@@ -18,14 +18,11 @@ def process_images(image_paths, output_dir):
 
 if __name__ == "__main__":
     paths = [
-        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\star_icon_1785528596709.png",
-        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\zap_icon_1785528634168.png",
-        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\wrench_icon_1785528677018.png",
-        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\hammer_icon_1785528723496.png",
-        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\chat_icon_1785528796689.png",
-        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\gamepad_icon_1785528831391.png",
-        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\camera_icon_1785528871316.png"
+        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\ssd_isolated_1785553958638.png",
+        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\psu_isolated_1785553976383.png",
+        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\fans_isolated_1785553995392.png",
+        r"C:\Users\nr166\.gemini\antigravity-ide\brain\a0f5720d-31e0-4ac7-b306-12a1afd059f5\monitor_isolated_1785554012281.png"
     ]
-    output_directory = "public/images/icons"
+    output_directory = "public/images/products"
     process_images(paths, output_directory)
     print("All done!")

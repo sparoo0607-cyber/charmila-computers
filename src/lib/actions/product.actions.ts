@@ -88,13 +88,26 @@ export async function getProductsForPCBuilder() {
     });
     
     // Transform to match PCBuilderComponent structure
-    return products.map(p => ({
-      id: p.id,
-      name: p.name,
-      type: p.attributes ? JSON.parse(p.attributes).type : p.category.name, // e.g. "CPU"
-      price: p.price,
-      specs: p.attributes ? JSON.parse(p.attributes) : {},
-    }));
+    return products.map(p => {
+      let firstImage = undefined;
+      try {
+        const parsedImages = JSON.parse(p.images);
+        if (Array.isArray(parsedImages) && parsedImages.length > 0) {
+          firstImage = parsedImages[0];
+        }
+      } catch (e) {
+        // Fallback if parsing fails
+      }
+
+      return {
+        id: p.id,
+        name: p.name,
+        type: p.attributes ? JSON.parse(p.attributes).type : p.category.name, // e.g. "CPU"
+        price: p.price,
+        specs: p.attributes ? JSON.parse(p.attributes) : {},
+        image: firstImage,
+      };
+    });
   } catch (error) {
     console.error("Error fetching PC builder products:", error);
     return [];

@@ -97,12 +97,13 @@ export function ProductCard({ id, name, price, oldPrice, image, category }: Prod
           href={`https://wa.me/919010177427?text=${whatsappMessage}`}
           target="_blank"
           rel="noreferrer"
-          className="relative w-full overflow-hidden rounded-xl p-[1px] group/btn"
+          className="relative w-full overflow-hidden rounded-xl p-[1px] group/btn mt-auto"
         >
           <span className="absolute inset-0 bg-gradient-to-r from-[#2563EB] via-[#00D4FF] to-[#2563EB] opacity-70 group-hover/btn:opacity-100 transition-opacity duration-300" />
-          <div className="relative w-full bg-[#040812] group-hover/btn:bg-transparent transition-colors duration-300 rounded-lg sm:rounded-xl px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-center text-center">
-            <span className="text-[9px] sm:text-xs font-black text-white uppercase tracking-widest group-hover/btn:text-black transition-colors duration-300">
-              Buy Now
+          <div className="relative w-full bg-[#040812] group-hover/btn:bg-transparent transition-colors duration-300 rounded-lg sm:rounded-xl px-2 sm:px-4 py-2 flex items-center justify-center text-center">
+            <span className="text-[10px] sm:text-xs font-black text-white uppercase tracking-widest group-hover/btn:text-black transition-colors duration-300 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+              Add to Cart
             </span>
           </div>
         </a>
